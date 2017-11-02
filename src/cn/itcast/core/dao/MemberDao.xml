@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.core.dao.MemberDao">
+
+	<sql id="selectMemberListWhere">
+		<where>
+		      <if test="memName != null and memName != '' " >
+		       i.`name` like "%"#{memName}"%"
+		      </if>
+		      <if test="familyName != null and familyName != '' " >
+		        and f.family_name = #{familyName}
+		      </if>
+		      <if test="familyGrade != null and familyGrade != '' " >
+		        and f.family_grade = #{familyGrade}
+		      </if>
+    	</where>
+	</sql>
+	
+	<sql id="selectInfomation">
+		i.id as "memId",
+	    i.`name` as "memName",
+	    i.sex as "memSex",
+	    f.family_id as "familyId",
+		f.family_name  as "familyName",
+		f.family_location as "familyLocation",
+		f.family_grade as "familyGrade",
+		i.address  as "memAddress",
+		i.children as "memChildren",
+		i.marry as "memMarry",
+		i.phone as "memPhone",
+		i.worh as "worh",
+		i.pic as "pic" 
+	</sql>
+	
+	<select id="selectMemberList" resultType= "queryVo" parameterType = "queryVo">
+		select 
+	        <include refid="selectInfomation"/>
+		from member m
+			LEFT JOIN family f on m.family_id=f.family_id
+			LEFT JOIN info i ON m.mem_id=i.id
+		<include refid="selectMemberListWhere"/>
+		order by i.id asc
+		<if test="start !=null and rows != null">
+			limit #{start},#{rows} 
+		</if>
+	</select>
+	
+	<select id="selectMemberListCount" resultType= "int" parameterType = "queryVo">
+			SELECT COUNT(*)  FROM member m 
+			LEFT JOIN family f on m.family_id=f.family_id
+			LEFT JOIN info i ON m.mem_id=i.id
+			<include refid="selectMemberListWhere"/>
+	</select>
+	
+	<select id="selectFamily" resultType="Family">
+		select * from family
+	</select>
+	
+	<select id="getmemberById" resultType= "queryVo" parameterType = "int">
+		SELECT 
+			<include refid="selectInfomation"/>
+		from member m
+			LEFT JOIN family f on m.family_id=f.family_id
+			LEFT JOIN info i ON m.mem_id=i.id
+		    where m.mem_id = #{memId}
+	</select>
+	
+	<update id="update" parameterType="queryVo">
+		 UPDATE
+			member m 
+			LEFT JOIN family f on m.family_id=f.family_id
+			LEFT JOIN info i ON m.mem_id=i.id
+		 SET
+			f.family_location = #{familyLocation},
+			i.sex =  #{memSex},
+			i.marry =  #{memMarry},
+			i.children = #{memChildren} ,
+			i.worh =  #{worh},
+			i.phone =  #{memPhone},
+			i.address =  #{memAddress},
+			i.pic = #{pic}
+		where 
+			m.mem_id =  #{memId}
+	</update>
+	
+	<insert id ="add">
+        insert  into 
+					info(`name`,sex,marry,children,worh,phone,address,pic)
+		           VALUE(#{memName},#{memSex},#{memMarry},#{memChildren},#{worh},#{memPhone},#{memAddress},#{pic});
+		insert into member(family_id)select family_id from family where family_name= #{familyName};
+	</insert>
+	
+	<delete id = "delete" parameterType="int">
+		delete from member where mem_id = #{id};
+		delete from info where id = #{id};
+	</delete>
+	
+	
+	<insert id="fileUpload" parameterType="cn.itcast.core.bean.FileDemo">
+		insert into filedemo values(#{fileName},#{filePath});
+	</insert>
+	
+	<select id="findFileList" resultType="cn.itcast.core.bean.FileDemo" >
+		select * from filedemo ;
+	</select>
+	
+	
+</mapper>
