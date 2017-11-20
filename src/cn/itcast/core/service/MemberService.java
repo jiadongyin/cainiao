@@ -18,13 +18,15 @@ public interface MemberService {
 
 	void updatemember(QueryVo queryVo);
 
-	int addmember(QueryVo queryVo);
+	void addmember(QueryVo queryVo);
 
 	void deletemember(Integer id);
 
 	void fileUpload(FileDemo fileDemo);
 	
 	List<FileDemo> findFileList();
+
+	List<QueryVo> findList(QueryVo queryVo);
 
 
 }

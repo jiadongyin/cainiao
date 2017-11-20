@@ -2,12 +2,14 @@ package cn.itcast.core.bean;
 
 import java.io.Serializable;
 
+import cn.itcast.common.utils.excel.annotation.ExcelField;
+
 /*
  * 多表联合查询临时表
  */
 public class QueryVo implements Serializable{
 
-	private String memId;
+	private int memId;
 	private String memName;
 	private String memSex;
 	private String familyId;
@@ -40,7 +42,7 @@ public class QueryVo implements Serializable{
 	public QueryVo() {
 		super();
 	}
-	public QueryVo(String memId, String memName, String memSex, String familyId, String familyName,
+	public QueryVo(int memId, String memName, String memSex, String familyId, String familyName,
 			String familyLocation, String familyGrade, String memAddress, String memChildren, String memMarry,
 			String memPhone, String worh, String pic, Integer start, Integer rows) {
 		super();
@@ -60,23 +62,48 @@ public class QueryVo implements Serializable{
 		this.start = start;
 		this.rows = rows;
 	}
-	public String getMemId() {
+	
+	@ExcelField(title="ID", align=2, sort=1)
+	public int getMemId() {
 		return memId;
 	}
-	public void setMemId(String memId) {
+	public void setMemId(int memId) {
 		this.memId = memId;
 	}
+	@ExcelField(title="名称", align=2, sort=2)
 	public String getMemName() {
 		return memName;
 	}
 	public void setMemName(String memName) {
 		this.memName = memName;
 	}
+	@ExcelField(title="性别", align=2, sort=3)
 	public String getMemSex() {
 		return memSex;
 	}
 	public void setMemSex(String memSex) {
 		this.memSex = memSex;
+	}
+	@ExcelField(title="婚否", align=2, sort=4)
+	public String getMemMarry() {
+		return memMarry;
+	}
+	public void setMemMarry(String memMarry) {
+		this.memMarry = memMarry;
+	}
+	@ExcelField(title="配偶", align=2, sort=5)
+	public String getWorh() {
+		return worh;
+	}
+	public void setWorh(String worh) {
+		this.worh = worh;
+	}
+	@ExcelField(title="子女", align=2, sort=6)
+	public String getMemChildren() {
+		return memChildren;
+	}
+	public void setMemChildren(String memChildren) {
+		this.memChildren = memChildren;
 	}
 	public String getFamilyId() {
 		return familyId;
@@ -84,12 +111,14 @@ public class QueryVo implements Serializable{
 	public void setFamilyId(String familyId) {
 		this.familyId = familyId;
 	}
+	@ExcelField(title="成员家庭", align=2, sort=7)
 	public String getFamilyName() {
 		return familyName;
 	}
 	public void setFamilyName(String familyName) {
 		this.familyName = familyName;
 	}
+	@ExcelField(title="籍贯", align=2, sort=8)
 	public String getFamilyLocation() {
 		return familyLocation;
 	}
@@ -102,36 +131,22 @@ public class QueryVo implements Serializable{
 	public void setFamilyGrade(String familyGrade) {
 		this.familyGrade = familyGrade;
 	}
+	@ExcelField(title="现居地", align=2, sort=9)
 	public String getMemAddress() {
 		return memAddress;
 	}
 	public void setMemAddress(String memAddress) {
 		this.memAddress = memAddress;
 	}
-	public String getMemChildren() {
-		return memChildren;
-	}
-	public void setMemChildren(String memChildren) {
-		this.memChildren = memChildren;
-	}
-	public String getMemMarry() {
-		return memMarry;
-	}
-	public void setMemMarry(String memMarry) {
-		this.memMarry = memMarry;
-	}
+	
+	@ExcelField(title="电话", align=2, sort=10)
 	public String getMemPhone() {
 		return memPhone;
 	}
 	public void setMemPhone(String memPhone) {
 		this.memPhone = memPhone;
 	}
-	public String getWorh() {
-		return worh;
-	}
-	public void setWorh(String worh) {
-		this.worh = worh;
-	}
+	
 	public String getPic() {
 		return pic;
 	}

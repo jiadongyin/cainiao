@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.core.dao.UserDao">
+	
+	<select id="findByName" parameterType="String" resultType="user">
+		select * from sec_user where user_name= #{username}
+	</select>
+	
+	<select id="fingRole" parameterType="int" resultType="String">
+		select role_name from sec_role where role_id = #{user_id}
+	</select>
+	
+	<select id="findPermission" parameterType="int" resultType="String">
+		select permission_name from sec_permission where permission_id = #{user_id}
+	</select>
+
+
+
+</mapper>

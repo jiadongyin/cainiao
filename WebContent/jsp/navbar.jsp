@@ -44,19 +44,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				        <li><a href="<%=basePath%>member/list.action?familyName=东麻子一家"><iclass="fa fa-edit fa-fw"></i>东麻子一家</a></li>
 				        <li><a href="<%=basePath%>member/list.action" ><iclass="fa fa-edit fa-fw"></i> 全部成员</a></li>
 				      </ul>
-				      <form class="navbar-form navbar-left">
-				        <div class="form-group">
-				          <input type="text" class="form-control" >
-				        </div>
-				        <button type="submit" class="btn btn-default" disabled="disabled">Submit</button>
-				      </form>
+				      
 				      <ul class="nav navbar-nav navbar-right">
-				        <li><a href="javaScript:void(0)">哈哈，没反应</a></li>
 				        <li class="dropdown">
-				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">菜单 <span class="caret"></span></a>
+				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">你好：${currentUser} <span class="caret"></span></a>
 				          <ul class="dropdown-menu">
-				            <li><a href="javascript:">修改密码</a></li>
-				            <li><a href="javascript:">退出登录</a></li>
+				            <li><a href="/xiaoyin/jsp/modifyPass.jsp">修改密码</a></li>
+				            <li><a href="/xiaoyin/user/logout.action">退出登录</a></li>
 				            <li role="separator" class="divider"></li>
 				            <li><a href="javascript:">help</a></li>
 				          </ul>

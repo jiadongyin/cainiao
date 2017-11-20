@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="itcast" uri="http://itcast.cn/common/"%>
+<%@ include file="/jsp/taglib.jsp"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -24,6 +25,7 @@
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->  
 <script src="/xiaoyin/js/bootstrap.min.js"></script> 
 <script src="/xiaoyin/js/jquery.min.js"></script>
+<script src="/xiaoyin/js/layer-v2.3/layer/layer.js"></script>
 <!-- MetisMenu CSS -->
 <link href="/xiaoyin/css/metisMenu.min.css" rel="stylesheet">
 <!-- DataTables CSS -->
@@ -90,7 +92,6 @@ function editmember(id) {
 			$("#edit_memAddress").val(data.memAddress);
 			$("#edit_memChildren").val(data.memChildren);
 			$("#edit_pic").val(data.pic);
-			
 		}
 	});
 }
@@ -102,29 +103,46 @@ function updatemember() {
 	});
 }
 	
-function deletemember(id) { 
+<%-- function deletemember(id) { 
 	if(confirm('确实要删除该成员吗?')) {
 		$.post("<%=basePath%>member/delete.action",{"memId":id},function(data){
 			alert("成员删除成功！");
 			//window.location.reload();
 		});
 	}
-}
-//删除行
+} --%>
+//删除行,页面不做跳转
 function delRow(node){
-	if(confirm('确实要删除该成员吗?')) {
-		var tr1 = node.parentNode.parentNode;  
-       // alert(tr1.rowIndex);  
-       // alert(tr1.cells[0].childNodes[0].value);   
-        var id = tr1.cells[0].childNodes[0].value;
-		$.post("<%=basePath%>member/delete.action",{"memId":id},function(data){
-			tr1.style.display="none";
-		//	alert("成员删除成功！");
-			//window.location.reload();
+	layer.confirm('确实要删除该成员吗?', {
+		  btn: ['确定','取消'] //按钮
+		}, function(){
+			var tr1 = node.parentNode.parentNode;  
+	       // alert(tr1.rowIndex);  
+	       // alert(tr1.cells[0].childNodes[0].value);   
+	        var id = tr1.cells[0].childNodes[0].value;
+			$.post("<%=basePath%>member/delete.action",{"memId":id},function(data){
+				if(data == 'succ') {
+					layer.alert('删除成功');
+					tr1.style.display="none";
+				}
+				else {
+					//$("#msgDiv").html(data);
+					layer.open({
+						  type: 1,
+						  skin: 'layui-layer-rim', //加上边框
+						  area: ['420px', '240px'], //宽高
+						  content: data    //此处返回的data是一个流，是unauthorized.jsp页面
+						});
+				}
+			}, 'html');
+		}, function(){
+			closeBtn: 0
 		});
-	}
 	
-}	
+	/* if(confirm('确实要删除该成员吗?')) {
+		
+	} */
+}
 
 $(document).ready(function(){
 	$.post("<%=basePath%>member/selectFamily.action",function(data){
@@ -149,6 +167,7 @@ $(document).ready(function(){
 		})
 	});
 })
+
 </script>
 </head>
   
@@ -171,12 +190,10 @@ $(document).ready(function(){
 			</div>
 		</div>
 	 </nav>
-		
+		<div id="msgDiv" style="">
+		</div>
 		<!-- 搜索栏 -->
 		<div id="page-wrapper">
-			<div class="row">
-				<div class="col-lg-12"><h1 class="page-header">成员管理</h1>	</div>
-			</div>
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<form class="form-inline" action="${pageContext.request.contextPath }/member/list.action" method="get">
@@ -203,9 +220,12 @@ $(document).ready(function(){
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">成员信息列表 
-					 	<a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#memberAddDialog" onclick="javascript:void(0)">新增成员</a>
-					 	<a href="#" class="btn btn-danger btn-xs" onclick="deleteChecked()">复选删除</a>
-						</div> 
+					 	<a href="javascript:" class="btn btn-primary " data-toggle="modal" data-target="#memberAddDialog" onclick="javascript:void(0)">新增成员</a>
+						<table:importExcel url="/xiaoyin/member/importExcel.action"></table:importExcel><!-- 导入按钮 -->					 	
+						<a href="javascript:" class="btn btn-danger " onclick="deleteChecked()">复选删除</a>&nbsp;
+ 						<table:exportExcel url="/xiaoyin/member/exportExcel.action"></table:exportExcel><!-- 导出按钮 -->					 				 	
+ 						<table:exportPDF url="/xiaoyin/member/exportpdf.action"></table:exportPDF><!-- 导出按钮 -->					 				 	
+ 						</div> 
 						<!-- /.panel-heading -->
 						<table class="table table-bordered table-striped" id="myTable">
 							<thead>
@@ -222,7 +242,7 @@ $(document).ready(function(){
 							</thead>
 							<tbody>
 								<c:forEach items="${page.rows}" var="m">
-							<form action="/xiaoyin/member/edit.action?id=${m.memId }" method="post">
+							<form id="searchForm" modelAttribute="member" action="/xiaoyin/member/edit.action?id=${m.memId }" method="post">
 									<tr>
 										<td><input type="checkbox" name="ids" value="${m.memId}"></td>
 										<td>${m.memId}</td>

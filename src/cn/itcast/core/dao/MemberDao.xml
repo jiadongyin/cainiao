@@ -39,7 +39,7 @@
 			LEFT JOIN family f on m.family_id=f.family_id
 			LEFT JOIN info i ON m.mem_id=i.id
 		<include refid="selectMemberListWhere"/>
-		order by i.id asc
+		order by i.id desc
 		<if test="start !=null and rows != null">
 			limit #{start},#{rows} 
 		</if>
@@ -83,7 +83,7 @@
 			m.mem_id =  #{memId}
 	</update>
 	
-	<insert id ="add">
+ 	<insert id ="add" useGeneratedKeys="true" keyProperty="memId" parameterType="queryVo">  
         insert  into 
 					info(`name`,sex,marry,children,worh,phone,address,pic)
 		           VALUE(#{memName},#{memSex},#{memMarry},#{memChildren},#{worh},#{memPhone},#{memAddress},#{pic});
@@ -104,5 +104,11 @@
 		select * from filedemo ;
 	</select>
 	
-	
+	<select id="findList" parameterType="queryVo" resultType="queryVo">
+		SELECT 
+			<include refid="selectInfomation"/>
+		from member m
+			LEFT JOIN family f on m.family_id=f.family_id
+			LEFT JOIN info i ON m.mem_id=i.id
+	</select>
 </mapper>

@@ -1,8 +1,9 @@
 package cn.itcast.common.utils;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Page<T> {
+public class Page<T> implements Serializable{
     
 	private int total;
 	private int page;

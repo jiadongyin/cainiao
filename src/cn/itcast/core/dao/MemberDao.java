@@ -4,13 +4,12 @@ import java.util.List;
 
 import cn.itcast.core.bean.Family;
 import cn.itcast.core.bean.FileDemo;
-import cn.itcast.core.bean.Member;
 import cn.itcast.core.bean.QueryVo;
 
 public interface MemberDao {
 
 
-	List<QueryVo> findList();
+	List<QueryVo> findList(QueryVo queryVo);
 
 	List<QueryVo> selectMemberList(QueryVo queryVo);
 

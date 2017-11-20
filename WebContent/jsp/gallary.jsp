@@ -38,6 +38,7 @@
 			margin: 25px 0;
 		}
 	</style>
+	
   </head>
   
   <body>
@@ -72,6 +73,7 @@
 		        dof:true,
 		        screenOpacity:0.8
 		    });
+			
 		});
 		
 	</script>
