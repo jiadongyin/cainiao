@@ -21,9 +21,8 @@
         <property name="filterChainDefinitions">
             <value>
                 <!-- 对静态资源设置匿名访问 -->
-                /css/** = anon
-				/images/** = anon
-				/js/** = anon
+                /static/** = anon
+                /unauthorized.jsp = anon
 				<!-- 验证码，可匿名访问 -->
 				/authImage* = anon
 				<!-- 登陆页面和方法，可匿名访问 -->
@@ -52,7 +51,6 @@
         <!-- 记住我 -->
     </bean>
     <bean id="systemAuthorizingRealm" class="cn.itcast.common.shiro.SystemAuthorizingRealm">
-        <!-- <property name="credentialsMatcher" ref="credentialsMatcher"/> -->
     </bean>
     
     <bean id="redisSessionDAO" class="cn.itcast.common.redis.RedisSessionDao"/>

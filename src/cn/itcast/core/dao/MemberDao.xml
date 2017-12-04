@@ -110,5 +110,12 @@
 		from member m
 			LEFT JOIN family f on m.family_id=f.family_id
 			LEFT JOIN info i ON m.mem_id=i.id
+		<if test="start !=null and rows != null">
+			limit #{start},#{rows} 
+		</if>	
 	</select>
+	
+	
+	
+	
 </mapper>

@@ -14,8 +14,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	
-<script src="/xiaoyin/js/jquery-2.0.3.min.js"></script>  
-<link rel="stylesheet" type="text/css" href="/xiaoyin/css/login.css">
+<script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>  
+<link rel="stylesheet" type="text/css" href="/xiaoyin/static/css/login.css">
 <style type="text/css">
 body,td,th { font-family: "Source Sans Pro", sans-serif; }
 body { background-color: #2B2B2B; }
@@ -27,10 +27,10 @@ body { background-color: #2B2B2B; }
 	<div class="container">
 		<h1>修改密码</h1>
 		<font color="red">${ msg }</font>
-		<form class="form" action="/xiaoyin/user/login.action" method="post" >
-			<input type="password" placeholder="原始密码" name="username">
-			<input type="password" placeholder="新密码" name="password">
-			<input type="password" placeholder="确认密码" name="password">
+		<form class="form" action="/xiaoyin/user/modifyPass.action" method="post" >
+			<input type="password" placeholder="原始密码" name="oldPass">
+			<input type="password" placeholder="新密码" name="newPass">
+			<input type="password" placeholder="确认密码" name="confirmPass">
 			<br>
 			<button type="submit" id="login-button" style="background-color: #50a3a2;">确认修改</button>
 		</form>
@@ -38,8 +38,8 @@ body { background-color: #2B2B2B; }
 	
 	<ul class="bg-bubbles">
 		<li><font color="red">${ msg }</font></li>
-		<li><img src="/xiaoyin/images/yjy02.jpg" style="width: 200px; height: 300px;"></li>
-		<li><img src="/xiaoyin/images/yjy02.jpg" style="width: 200px; height: 300px;"></li>
+		<li><img src="/xiaoyin/static/images/yjy02.jpg" style="width: 200px; height: 300px;"></li>
+		<li><img src="/xiaoyin/static/images/yjy02.jpg" style="width: 200px; height: 300px;"></li>
 		<li></li>
 		<li>f</li>
 		<li>gt</li>

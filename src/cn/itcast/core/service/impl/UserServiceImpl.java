@@ -21,4 +21,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.findByName(username);
 	}
 
+	@Override
+	public void modifyPass(User currentUser) {
+		userDao.modifyPass(currentUser);
+	}
+
 }

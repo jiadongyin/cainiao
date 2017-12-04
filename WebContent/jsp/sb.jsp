@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-    <script src="/xiaoyin/js/jquery-2.0.3.min.js"></script>
+    <script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>
 	<script type="text/javascript">
 	function goBack(){
 		window.history.back();

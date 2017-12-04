@@ -8,8 +8,8 @@
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<script src="/xiaoyin/js/jquery-2.0.3.min.js"></script>  
-<script src="/xiaoyin/js/layer-v2.3/layer/layer.js"></script>
+	<script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>  
+<script src="/xiaoyin/static/js/layer-v2.3/layer/layer.js"></script>
 <script type="text/javascript">
 	function daoru(){
 		top.layer.open({

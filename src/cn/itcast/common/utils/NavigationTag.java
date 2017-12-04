@@ -44,7 +44,7 @@ public class NavigationTag extends TagSupport {
         		pageCount++;
         	}
         	writer.print("<nav>");
-        	writer.print("<span class = \"aaaa\">总共"+ page.getTotal()+"条记录</span>");
+        	//writer.print("<span style=\"margin-left: 10px;\" class = \"a\">总共"+ page.getTotal()+"条记录</span>");
         	
         	writer.print("<ul class=\"pagination\">");
             //显示“上一页”按钮

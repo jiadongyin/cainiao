@@ -6,4 +6,6 @@ public interface UserService {
 
 	User findByName(String username);
 
+	void modifyPass(User currentUser);
+
 }

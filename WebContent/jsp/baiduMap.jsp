@@ -1,26 +1,20 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">   
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
-	<link href="<%=basePath%>css/bootstrap.min.css" rel="stylesheet">
+	<link href="/xiaoyin/static/css/bootstrap.min.css" rel="stylesheet">
 	      
-	    <link rel="stylesheet" href="<%=basePath%>css/bootstrap-theme.min.css">  
+	    <link rel="stylesheet" href="/xiaoyin/static/css/bootstrap-theme.min.css">  
 	    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->  
-	    <script src="<%=basePath%>js/jquery-1.11.3.min.js"></script>  
+	    <script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>  
 	    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->  
-	    <script src="<%=basePath%>js/bootstrap.min.js"></script> 
+	    <script src="/xiaoyin/static/js/bootstrap.min.js"></script> 
 	<title>百度地图</title>  
 	<style type="text/css">   
 		body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
@@ -65,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<nav class="navbar navbar-default">
 				  <div class="container-fluid" style="height: 20px;width: 100%">
 				    <div class="navbar-header">
-						<a class="navbar-brand" href="<%=basePath%>index.html">首页<span class="sr-only">(current)</span></a>
+						<a class="navbar-brand" href="/xiaoyin/index.html">首页<span class="sr-only">(current)</span></a>
 					</div>
 					<div class="navbar-header" style="position: absolute;margin-top: 10px;margin-left: 50px">
 						&nbsp;输入位置信息（省/市/县/乡）：<input id="wz" type="text" name="weizhi"/>&nbsp;&nbsp;
@@ -75,6 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  		<input id="butt2" type="button" value="获取行政区划" class="btn btn-default" onclick="getBoundary()"/>&nbsp;&nbsp;
 				  		<button onclick="ce()" class="btn btn-default">测量</button>&nbsp;&nbsp;
 				  		<button onclick="jingwei()" class="btn btn-default">点击获取经纬度</button>&nbsp;&nbsp;
+				  		<button onclick="clearAll()" class="btn btn-default">清除覆盖物</button>&nbsp;&nbsp;
 					</div>
 				 </div>
 			</nav>
@@ -128,17 +123,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        }
 	        overlays.length = 0   
 	    }
+	    
+	    
 		
 		function jingwei(){
+			var va = 1;
 			var geoc = new BMap.Geocoder();    //逆地址解析，点击地图展示详细地址
 			map.addEventListener("click", function(e){        
-				var pt = e.point;
-				geoc.getLocation(pt, function(rs){
-					var addComp = rs.addressComponents;
-					alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber+"\n"+"经度："+e.point.lng + ",纬度：" + e.point.lat);
-				});        
+				if(va){
+					var pt = e.point;
+					geoc.getLocation(pt, function(rs){
+						var addComp = rs.addressComponents;
+						alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber+"\n"+"经度："+e.point.lng + ",纬度：" + e.point.lat);
+					});        
+					va = 0;
+				}
 			});
-			
 		}
 		
 		function ce(){

@@ -10,15 +10,15 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<!-- 新 Bootstrap 核心 CSS 文件 -->  
-	    <link rel="stylesheet" href="/xiaoyin/css/bootstrap.min.css">  
+	    <link rel="stylesheet" href="/xiaoyin/static/css/bootstrap.min.css">  
 	    <!-- 可选的Bootstrap主题文件（一般不用引入） -->  
-	    <link rel="stylesheet" href="/xiaoyin/css/bootstrap-theme.min.css">  
+	    <link rel="stylesheet" href="/xiaoyin/static/css/bootstrap-theme.min.css">  
 	    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->  
-	    <script src="/xiaoyin/js/jquery-2.0.3.min.js"></script>  
+	    <script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>  
 	    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->  
-	    <script src="/xiaoyin/js/bootstrap.min.js"></script> 
+	    <script src="/xiaoyin/static/js/bootstrap.min.js"></script> 
 	    
-	<link rel="stylesheet" href="/xiaoyin/html/uploadgallary/dist/stylesheets/chromagallery.min.css">
+	<link rel="stylesheet" href="/xiaoyin/static/html/uploadgallary/dist/stylesheets/chromagallery.min.css">
 <style type="text/css">
 		body,html
 		{ height: 100%; background-color: #191919; 		}
@@ -58,7 +58,7 @@
 	</div>
 	
 	<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-	<script src="/xiaoyin/html/uploadgallary/dist/scripts/chromagallery.pkgd.min.js"></script>
+	<script src="/xiaoyin/static/html/uploadgallary/dist/scripts/chromagallery.pkgd.min.js"></script>
 	<script type="text/javascript">
 		// $(document).ready(function() 
 		// {

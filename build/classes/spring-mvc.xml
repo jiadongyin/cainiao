@@ -70,4 +70,6 @@
 			<property name="proxyTargetClass" value="true" />
 		</bean>
 	
+	  <!-- 静态资源映射 -->
+      <mvc:resources mapping="/static/**" location="/static/" cache-period="31536000"/>
 </beans>

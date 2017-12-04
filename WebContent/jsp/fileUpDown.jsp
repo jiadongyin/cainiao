@@ -17,12 +17,12 @@
 <meta name="description" content="">
 <meta name="author" content="">
         <title>图片上传</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
-        <script src="../js/jquery-2.0.3.min.js"></script>
-        <script src="../js/fileinput.js" type="text/javascript"></script>
-        <script src="../js/fileinput_locale_de.js" type="text/javascript"></script>
-        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+        <link href="/xiaoyin/static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/xiaoyin/static/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+        <script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>
+        <script src="/xiaoyin/static/js/fileinput.js" type="text/javascript"></script>
+        <script src="/xiaoyin/static/js/fileinput_locale_de.js" type="text/javascript"></script>
+        <script src="/xiaoyin/static/js/bootstrap.min.js" type="text/javascript"></script>
     </head>
     <body>
     

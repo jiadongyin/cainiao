@@ -1,12 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
     <title>登陆页面</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -14,8 +10,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	
-<script src="/xiaoyin/js/jquery-2.0.3.min.js"></script>  
-<link rel="stylesheet" type="text/css" href="/xiaoyin/css/login.css">
+<script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>  
+<link rel="stylesheet" type="text/css" href="/xiaoyin/static/css/login.css">
 <style type="text/css">
 body,td,th { font-family: "Source Sans Pro", sans-serif; }
 body { background-color: #2B2B2B; }
@@ -45,17 +41,17 @@ body { background-color: #2B2B2B; }
 	
 	<ul class="bg-bubbles">
 		<li><font color="red" size="2">${ msg }</font></li>
-		<li><img src="/xiaoyin/images/yjy02.jpg" style="width: 200px; height: 300px;"></li>
-		<li><img src="/xiaoyin/images/奎02.jpg" style="width: 200px; height: 300px;"></li>
-		<li><img src="/xiaoyin/images/cb001.jpg" style="width: 300px; height: 300px;"></li>
-		<li><img src="/xiaoyin/images/cq01.jpg" style="width: 300px; height: 200px;"></li>
-		<li><img src="/xiaoyin/images/yjy01.jpg" style="width: 300px; height: 300px;"></li>
+		<li><img src="/xiaoyin/static/images/yjy02.jpg" style="width: 200px; height: 300px;"></li>
+		<li><img src="/xiaoyin/static/images/奎02.jpg" style="width: 200px; height: 300px;"></li>
+		<li><img src="/xiaoyin/static/images/cb001.jpg" style="width: 300px; height: 300px;"></li>
+		<li><img src="/xiaoyin/static/images/cq01.jpg" style="width: 300px; height: 200px;"></li>
+		<li><img src="/xiaoyin/static/images/yjy01.jpg" style="width: 300px; height: 300px;"></li>
 		<li><font color="red" size="10">${ msg }</li>
 	</ul>
 	
 </div>
 
-<script type="text/javascript" src="/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript">
 <!-- 触发JS刷新-->
    function changeImg(){

@@ -1,8 +1,8 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ include file="/jsp/taglib.jsp"%>
 <%@ attribute name="url" type="java.lang.String" required="true"%>
-<script src="/xiaoyin/js/jquery-2.0.3.min.js"></script>  
-<script src="/xiaoyin/js/layer-v2.3/layer/layer.js"></script>
+<script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>  
+<script src="/xiaoyin/static/js/layer-v2.3/layer/layer.js"></script>
 <%-- 使用方法： 1.将本tag写在查询的form之前；2.传入url --%>
 <button id="btnExportPDF" class="btn btn-default" data-toggle="tooltip" data-placement="left" />导出PDF</button>
 <script type="text/javascript">

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import cn.itcast.common.log.annotation.ControllerLog;
 import cn.itcast.common.utils.Encodes;
 import cn.itcast.common.utils.ImageUtil;
+import cn.itcast.common.utils.JsonUtils;
 import cn.itcast.common.utils.Page;
 import cn.itcast.common.utils.excel.ExportExcel;
 import cn.itcast.common.utils.excel.ImportExcel;
@@ -54,7 +56,6 @@ import cn.itcast.core.service.MemberService;
  */
 @Controller
 @RequestMapping("/member")
-
 public class MemberController {
 	
 	private static Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -71,15 +72,32 @@ public class MemberController {
 	 * @param page 起始页
 	 * @param rows 每页记录数
 	 */
-
 	@RequestMapping(value = {"list", ""})
-	@RequiresPermissions(value={"user:view","admin:crud"},logical=Logical.OR)
+	@RequiresPermissions(value={"user:view","admin:view"},logical=Logical.OR)
 //	@ControllerLog(operationType="list",operationName="分页查询")  
 	public String list(@RequestParam(defaultValue="1")Integer page, @RequestParam(defaultValue="10")Integer rows,
 			QueryVo queryVo, Model model) {
 		Page<QueryVo> pageList = memberService.findMemberList(page,rows,queryVo);
         model.addAttribute("page", pageList);
-		return "member";
+		return "MyJsp";
+	}
+	
+	@RequestMapping(value = {"list_layui", ""})
+	@RequiresPermissions(value={"user:view","admin:view"},logical=Logical.OR)
+	@ResponseBody
+	public String list_layui(@RequestParam(defaultValue="1")Integer page, @RequestParam(defaultValue="10")Integer rows,QueryVo queryVo) {
+		//当前页
+		queryVo.setStart((page-1) * rows) ;
+		//每页数
+		queryVo.setRows(rows);
+		List<QueryVo> list = memberService.findList(queryVo);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("code", 200);
+		jsonObject.put("msg", "妈卖批");
+		jsonObject.put("count", 13);
+		jsonObject.put("data", list);
+		System.out.println(jsonObject.toString());
+		return jsonObject.toString();
 	}
 	
 	/*
@@ -98,6 +116,7 @@ public class MemberController {
 	*/
 	@RequestMapping("/edit")
 	@ControllerLog(operationType="getmemberById",operationName="根据id获取成员信息")  
+	@RequiresPermissions(value={"user:update","admin:crud"},logical=Logical.OR)
 	public String getmemberById(int id,Model model,HttpServletRequest request,HttpServletResponse response) throws IOException {
 		QueryVo queryVo = memberService.getmemberById(id);
 		String pic = queryVo.getPic();
@@ -115,6 +134,7 @@ public class MemberController {
 	 */
 	@RequestMapping("/update")
 	@ControllerLog(operationType="memberUpdate",operationName="成员更新操作")  
+	@RequiresPermissions(value={"user:update","admin:crud"},logical=Logical.OR)
 	public String memberUpdate(HttpServletRequest request,QueryVo queryVo,@RequestParam("myfile")MultipartFile pictureFile) throws IOException {
 	  if (pictureFile.getSize() != 0) {  
 		 //设置字符集
@@ -142,6 +162,7 @@ public class MemberController {
 	 */
 	@RequestMapping("/add")
 	@ControllerLog(operationType="memberAdd",operationName="新增成员") 
+	@RequiresPermissions(value={"user:create","admin:crud"},logical=Logical.OR)
 	public String memberAdd(HttpServletRequest request,QueryVo queryVo,@RequestParam("myfile")MultipartFile pictureFile) throws IOException {
 		if (pictureFile.getSize() != 0) {  
 			//设置字符集
@@ -160,6 +181,19 @@ public class MemberController {
 	        File toFile = new File(pathRoot+"/"+picName);  
 	        ImageUtil.resizePng(fromFile, toFile, 500, 700, false);  
 		}
+		memberService.addmember(queryVo); 
+		return "redirect:/member/list.action";
+	}
+	
+	/*
+	 * 成员添加back
+	 */
+	@RequestMapping("/add_back")
+	@ControllerLog(operationType="memberAdd",operationName="新增成员") 
+	@RequiresPermissions(value={"user:create","admin:crud"},logical=Logical.OR)
+	public String memberAdd_back(QueryVo queryVo) throws IOException {
+		
+		queryVo.setMemAddress(queryVo.getProvince()+queryVo.getCity()+queryVo.getArea()+queryVo.getTown());
 		memberService.addmember(queryVo); 
 		return "redirect:/member/list.action";
 	}
@@ -217,6 +251,31 @@ public class MemberController {
 		//request.setAttribute("picPath", picPath);
 		//return "forward:/member/fileList.action";
 	}
+	/*
+	 * 图片上传，
+	 */
+	@RequestMapping("/ajax_upload")
+	@ControllerLog(operationType="ajax_upload",operationName="图片上传") 
+    @ResponseBody
+    public String up(@RequestParam MultipartFile file,FileDemo fileDemo) throws IOException{
+		String pathRoot = pic_upload_dir;
+		//原始文件名
+        String picName = file.getOriginalFilename();
+		file.transferTo(new File(pathRoot+"//"+picName));
+		//把文件名保存到数据库
+		fileDemo.setFileName(picName);
+	    fileDemo.setFilePath(pathRoot+"//"+picName);
+	    memberService.fileUpload(fileDemo);
+	    JSONObject jsonObject = new JSONObject();
+		jsonObject.put("code", 200);
+		jsonObject.put("msg", "妈卖批");
+		jsonObject.put("src", pathRoot+"//"+picName);
+		jsonObject.put("data", fileDemo);
+		System.out.println(jsonObject.toString());
+		return jsonObject.toString();
+
+    }
+
 	
 	/*
 	 * 上传图片列表
@@ -300,7 +359,7 @@ public class MemberController {
 	@RequestMapping("/deleteChecked")
 	@ResponseBody
 	@ControllerLog(operationType="deleteChecked",operationName="复选删除")
-	@RequiresPermissions("admin:crud")
+//	@RequiresPermissions("admin:crud")
 	public String deleteChecked(@RequestParam("Str")String ids) {
 		String[] id = ids.split(",");
 		try {

@@ -14,186 +14,24 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
 <title>成员列表</title>
-<!-- Bootstrap Core CSS -->
-<link href="/xiaoyin/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="/xiaoyin/css/bootstrap-theme.min.css">  
+<link href="/xiaoyin/static/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/xiaoyin/static/css/bootstrap-theme.min.css">  
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->  
-<script src="/xiaoyin/js/jquery-2.0.3.min.js"></script>  
+<script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>  
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->  
-<script src="/xiaoyin/js/bootstrap.min.js"></script> 
-<script src="/xiaoyin/js/jquery.min.js"></script>
-<script src="/xiaoyin/js/layer-v2.3/layer/layer.js"></script>
-<!-- MetisMenu CSS -->
-<link href="/xiaoyin/css/metisMenu.min.css" rel="stylesheet">
-<!-- DataTables CSS -->
-<link href="/xiaoyin/css/dataTables.bootstrap.css" rel="stylesheet">
-<!-- Custom CSS -->
-<link href="/xiaoyin/css/sb-admin-2.css" rel="stylesheet">
-<!-- Custom Fonts -->
-<link href="/xiaoyin/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link href="/xiaoyin/css/boot-crm.css" rel="stylesheet" type="text/css">
-
-<script type="text/javascript">
-//复选框全选和全不选
-$(function(){
-	// 获得上面的复选框:
-	//var $selectAll = $("#selectAll");
-	// alert($selectAll.attr("checked"));
-	/*$selectAll.click(function(){
-		// alert($selectAll.prop("checked"));
-		if($selectAll.prop("checked") == true){
-			// 上面的复选框被选中
-			$(":checkbox[name='ids']").prop("checked",true);
-		}else{
-			// 上面的复选框没有被选中
-			$(":checkbox[name='ids']").prop("checked",false);
-		}
-	});*/
-	// 简化：
-	$("#selectAll").click(function(){
-		$(":checkbox[name='ids']").prop("checked",this.checked);
-	});
-});
-
-function deleteChecked(){
-	var obj=document.getElementsByName('ids'); //选择所有name="'test'"的对象，返回数组 
-	//取到对象数组后，我们来循环检测它是不是被选中 
-	var s=''; 
-	for(var i=1; i<obj.length; i++){ 
-	if(obj[i].checked) s+=obj[i].value+','; //如果选中，将value添加到变量s中 
-	} 
-	//那么现在来检测s的值就知道选中的复选框的值了 
-	//alert(s).val(); 
-	if(confirm('确实要删除所选成员吗?')) {
-		$.post("/xiaoyin/member/deleteChecked.action",{"Str":s},function(data){
-			window.location.reload();
-		});
-	}
-}
-
-function editmember(id) {
-	$.ajax({
-		type:"get",
-		url:"/xiaoyin/member/edit.action",
-		data:{"id":id},
-		success:function(data) {
-		  //var member = JSON.parse(data);
-			$("#edit_memId").val(data.memId);
-			$("#edit_memberName").val(data.memName);
-			$("#edit_memberSex").val(data.memSex);
-			$("#edit_familyName").val(data.familyName)
-			$("#edit_memMarry").val(data.memMarry)
-			$("#edit_worh").val(data.worh)
-			$("#edit_memPhone").val(data.memPhone);
-			$("#edit_familyLocation").val(data.familyLocation);
-			$("#edit_memAddress").val(data.memAddress);
-			$("#edit_memChildren").val(data.memChildren);
-			$("#edit_pic").val(data.pic);
-		}
-	});
-}
-	
-function updatemember() {
-	$.post("<%=basePath%>member/update.action",$("#edit_member_form").serialize(),function(data){
-		alert("成员信息更新成功！");
-		window.location.reload();
-	});
-}
-	
-<%-- function deletemember(id) { 
-	if(confirm('确实要删除该成员吗?')) {
-		$.post("<%=basePath%>member/delete.action",{"memId":id},function(data){
-			alert("成员删除成功！");
-			//window.location.reload();
-		});
-	}
-} --%>
-//删除行,页面不做跳转
-function delRow(node){
-	layer.confirm('确实要删除该成员吗?', {
-		  btn: ['确定','取消'] //按钮
-		}, function(){
-			var tr1 = node.parentNode.parentNode;  
-	       // alert(tr1.rowIndex);  
-	       // alert(tr1.cells[0].childNodes[0].value);   
-	        var id = tr1.cells[0].childNodes[0].value;
-			$.post("<%=basePath%>member/delete.action",{"memId":id},function(data){
-				if(data == 'succ') {
-					layer.alert('删除成功');
-					tr1.style.display="none";
-				}
-				else {
-					//$("#msgDiv").html(data);
-					layer.open({
-						  type: 1,
-						  skin: 'layui-layer-rim', //加上边框
-						  area: ['420px', '240px'], //宽高
-						  content: data    //此处返回的data是一个流，是unauthorized.jsp页面
-						});
-				}
-			}, 'html');
-		}, function(){
-			closeBtn: 0
-		});
-	
-	/* if(confirm('确实要删除该成员吗?')) {
-		
-	} */
-}
-
-$(document).ready(function(){
-	$.post("<%=basePath%>member/selectFamily.action",function(data){
-		 $("#familyName option").remove();//避免重复添加
-		 $("#familyName").append("<option value=''>---请选择---</option>");
-		$.each(data,function(i,n){
-		    // alert(n.family_name);
-			//根据id查找对象，
-           var obj = document.getElementById('familyName');
-           //添加一个选项
-          obj.options.add(new Option(n.family_name,n.family_name)); //这个兼容IE与firefox  
-		})
-		
-		 $("#familyGrade option").remove();//避免重复添加
-		 $("#familyGrade").append("<option value=''>---请选择---</option>");
-		$.each(data,function(i,n){
-		    // alert(n.family_name);
-			//根据id查找对象，
-           var obj = document.getElementById('familyGrade');
-           //添加一个选项
-          obj.options.add(new Option(n.family_grade,n.family_grade)); //这个兼容IE与firefox  
-		})
-	});
-})
-
-</script>
+<script src="/xiaoyin/static/js/bootstrap.min.js"></script> 
+<link href="/xiaoyin/static/css/sb-admin-2.css" rel="stylesheet"> 
+<link href="/xiaoyin/static/css/boot-crm.css" rel="stylesheet" type="text/css">
+<!-- 省市联动city --> 
+<script src="/xiaoyin/static/js/jquery.citys.js"></script> 
 </head>
   
 <body>
     <!-- 导航条 -->
 	<jsp:include page="navbar.jsp" flush="true" />
-		<!-- 侧边栏 -->
-		<div class="navbar-default sidebar" role="navigation">
-			<div class="sidebar-nav navbar-collapse">
-				<ul class="nav" id="side-menu">
-					<li><a href="<%=basePath%>member/list.action" ><iclass="fa fa-edit fa-fw"></i> 成员管理</a></li>
-					<li><a href="<%=basePath%>html/gallary1/gallary1.html"><iclass="fa fa-dashboard fa-fw"></i> 相册一</a></li>
-					<li><a href="<%=basePath%>html/gallary2/gallary2.html"><iclass="fa fa-dashboard fa-fw"></i> 相册二</a></li>
-					<li><a href="<%=basePath%>html/gallary4/gallary4.html"><iclass="fa fa-dashboard fa-fw"></i> 相册三</a></li>
-					<li><a href="<%=basePath%>member/uploadDown.action"><iclass="fa fa-dashboard fa-fw"></i> 图片上传</a></li>
-					<li><a href="<%=basePath%>member/sb.action"><iclass="fa fa-dashboard fa-fw"></i>上传相册</a></li>
-					<li><a href="<%=basePath%>member/baiduMap.action"><iclass="fa fa-dashboard fa-fw"></i> 百度地图</a></li>
-					<li><a href="/xiaoyin/OrgChart/tree.jsp"><iclass="fa fa-dashboard fa-fw"></i> 家族关系图</a></li>
-				</ul>
-			</div>
-		</div>
-	 </nav>
-		<div id="msgDiv" style="">
-		</div>
 		<!-- 搜索栏 -->
-		<div id="page-wrapper">
+		<div id="page-wrapper" style="margin-left: 0px">
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<form class="form-inline" action="${pageContext.request.contextPath }/member/list.action" method="get">
@@ -244,7 +82,7 @@ $(document).ready(function(){
 								<c:forEach items="${page.rows}" var="m">
 							<form id="searchForm" modelAttribute="member" action="/xiaoyin/member/edit.action?id=${m.memId }" method="post">
 									<tr>
-										<td><input type="checkbox" name="ids" value="${m.memId}"></td>
+										<td align="center"><input type="checkbox" name="ids" value="${m.memId}"></td>
 										<td>${m.memId}</td>
 										<td>${m.memName}</td>
 										<td>${m.memSex}</td>
@@ -276,10 +114,8 @@ $(document).ready(function(){
 	
 	
 	
-	
 	<!-- 新增成员 -->
-	<div class="modal fade" id="memberAddDialog" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
+	<div class="modal fade" id="memberAddDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -290,15 +126,18 @@ $(document).ready(function(){
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" action="/xiaoyin/member/add.action" method="post" enctype="multipart/form-data">
+					
+				<div class="row">
+					<div class=" col-md-8">
 						<div class="form-group">
-							<label for="add_memberName" class="col-sm-2 control-label">成员名称</label>
-							<div class="col-sm-10">
+							<label for="add_memberName" style="float:left;padding:7px 15px 0 27px;">成员名称</label>
+							<div  class="col-sm-5">
 								<input type="text" class="form-control" id="add_memberName" placeholder="成员名称" name="memName">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="add_familyName" style="float:left;padding:7px 15px 0 27px;">成员家庭</label> 
-							<div class="col-sm-10">
+							<div  class="col-sm-5">
 							 	<select	class="form-control" id=add_familyName placeholder="成员家庭" name="familyName"></select>
 									<script type="text/javascript">
 										$.post("<%=basePath%>member/selectFamily.action",function(data){
@@ -316,23 +155,27 @@ $(document).ready(function(){
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="add_memSex" class="col-sm-2 control-label">性别</label>
-							<div class="col-sm-10">
+							<label for="add_memSex" style="float:left;padding:7px 15px 0 55px;">性别</label>
+							<div class="col-sm-5">
 								<input type="text" class="form-control" id="add_memSex" placeholder="性别" name="memSex">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="add_memMarry" class="col-sm-2 control-label">婚否</label>
-							<div class="col-sm-10">
+							<label for="add_memMarry" style="float:left;padding:7px 15px 0 55px;">婚否</label>
+							<div class="col-sm-5">
 								<input type="text" class="form-control" id="add_memMarry" placeholder="婚否" name="memMarry">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="add_worh" class="col-sm-2 control-label">配偶</label>
-							<div class="col-sm-10">
+							<label for="add_worh" style="float:left;padding:7px 15px 0 55px;">配偶</label>
+							<div class="col-sm-5">
 								<input type="text" class="form-control" id="add_worh" placeholder="配偶" name="worh">
 							</div>
 						</div>
+					</div>
+					<div class="col-md-4">.col-md-6</div>
+				</div>		
+						
 						<div class="form-group">
 							<label for="add_memChildren" class="col-sm-2 control-label">子女</label>
 							<div class="col-sm-10">
@@ -341,16 +184,25 @@ $(document).ready(function(){
 						</div>
 						<div class="form-group">
 							<label for="add_memPhone" class="col-sm-2 control-label">电话</label>
-							<div class="col-sm-10">
+							<div class="col-sm-5">
 								<input type="text" class="form-control" id="add_memPhone" placeholder="电话" name="memPhone">
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="add_familyLocation" class="col-sm-2 control-label">家庭住址</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="add_familyLocation" placeholder="家庭住址" name="familyLocation">
-							</div>
-						</div>
+						
+						<div id="demo3" class="form-inline">
+						<label for="add_familyLocation" style="float:left;padding:7px 15px 0 27px;">家庭住址</label>
+			                <p>
+			                    <select name="province" class="form-control" style="width: 100px;"></select>
+			                    <select name="city" class="form-control" style="width: 100px;"></select>
+			                    <select name="area" class="form-control" style="width: 100px;"></select>
+			                    <select name="town" class="form-control" style="width: 100px;"></select>
+			                </p>
+			            </div>
+						
+						
+						
+						
+						
 						<div class="form-group">
 							<label for="add_memAddress" class="col-sm-2 control-label">现居地</label>
 							<div class="col-sm-10">
@@ -373,7 +225,181 @@ $(document).ready(function(){
 		</div>
 	</div>
 	<!-- /#wrapper -->
+<script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>  	
+<script src="/xiaoyin/static/js/layer-v2.3/layer/layer.js"></script> 
+<script type="text/javascript" src="/xiaoyin/static/js/jquery.citys.js"></script>
+<script type="text/javascript">
+
+//复选框全选和全不选
+$(function(){
+	// 获得上面的复选框:
+	//var $selectAll = $("#selectAll");
+	// alert($selectAll.attr("checked"));
+	/*$selectAll.click(function(){
+		// alert($selectAll.prop("checked"));
+		if($selectAll.prop("checked") == true){
+			// 上面的复选框被选中
+			$(":checkbox[name='ids']").prop("checked",true);
+		}else{
+			// 上面的复选框没有被选中
+			$(":checkbox[name='ids']").prop("checked",false);
+		}
+	});*/
+	// 简化：
+	$("#selectAll").click(function(){
+		$(":checkbox[name='ids']").prop("checked",this.checked);
+	});
+});
+
+function deleteChecked(){
+	var obj=document.getElementsByName('ids'); //选择所有name="'test'"的对象，返回数组 
+	//取到对象数组后，我们来循环检测它是不是被选中 
+	var s=''; 
+	for(var i=1; i<obj.length; i++){ 
+	if(obj[i].checked) s+=obj[i].value+','; //如果选中，将value添加到变量s中 
+	} 
+	//那么现在来检测s的值就知道选中的复选框的值了 
+	//alert(s).val(); 
+	layer.confirm('确实要删除所选成员吗?', {
+		  btn: ['确定','取消'] //按钮
+		}, function(){
+			$.post("/xiaoyin/member/deleteChecked.action",{"Str":s},function(data){
+				if(data == "OK"){
+					window.location.reload();
+				}else {
+					//$("#msgDiv").html(data);
+					layer.open({
+						  type: 1,
+						  skin: 'layui-layer-rim', //加上边框
+						  area: ['420px', '240px'], //宽高
+						  content: data    //此处返回的data是一个流，是unauthorized.jsp页面
+						});
+				}
+			}, 'html');
+		}, function(){
+			closeBtn: 0
+		});
+}
+
+/* function editmember(id) {
+	$.ajax({
+		type:"get",
+		url:"/xiaoyin/member/edit.action",
+		data:{"id":id},
+		success:function(data) {
+		  //var member = JSON.parse(data);
+			$("#edit_memId").val(data.memId);
+			$("#edit_memberName").val(data.memName);
+			$("#edit_memberSex").val(data.memSex);
+			$("#edit_familyName").val(data.familyName)
+			$("#edit_memMarry").val(data.memMarry)
+			$("#edit_worh").val(data.worh)
+			$("#edit_memPhone").val(data.memPhone);
+			$("#edit_familyLocation").val(data.familyLocation);
+			$("#edit_memAddress").val(data.memAddress);
+			$("#edit_memChildren").val(data.memChildren);
+			$("#edit_pic").val(data.pic);
+		}
+	});
+} */
 	
+function updatemember() {
+	$.post("<%=basePath%>member/update.action",$("#edit_member_form").serialize(),function(data){
+		alert("成员信息更新成功！");
+		window.location.reload();
+	});
+}
+	
+<%-- function deletemember(id) { 
+	if(confirm('确实要删除该成员吗?')) {
+		$.post("<%=basePath%>member/delete.action",{"memId":id},function(data){
+			alert("成员删除成功！");
+			//window.location.reload();
+		});
+	}
+} --%>
+//删除行,页面不做跳转
+function delRow(node){
+	layer.confirm('确实要删除该成员吗?', {
+		  btn: ['确定','取消'] //按钮
+		}, function(){
+			var tr1 = node.parentNode.parentNode;  
+	       // alert(tr1.rowIndex);  
+	       // alert(tr1.cells[0].childNodes[0].value);   
+	        var id = tr1.cells[0].childNodes[0].value;
+			$.post("<%=basePath%>member/delete.action",{"memId":id},function(data){
+				if(data == 'succ') {
+					layer.alert('删除成功');
+					tr1.style.display="none";
+				}
+				else {
+					//$("#msgDiv").html(data);
+					layer.open({
+						  type: 1,
+						  skin: 'layui-layer-rim', //加上边框
+						  area: ['420px', '240px'], //宽高
+						  content: data    //此处返回的data是一个流，是unauthorized.jsp页面
+						});
+				}
+			}, 'html');
+		}, function(){
+			closeBtn: 0
+		});
+}
+
+$(document).ready(function(){
+	$.post("<%=basePath%>member/selectFamily.action",function(data){
+		 $("#familyName option").remove();//避免重复添加
+		 $("#familyName").append("<option value=''>---请选择---</option>");
+		$.each(data,function(i,n){
+		    // alert(n.family_name);
+			//根据id查找对象，
+           var obj = document.getElementById('familyName');
+           //添加一个选项
+          obj.options.add(new Option(n.family_name,n.family_name)); //这个兼容IE与firefox  
+		})
+		 $("#familyGrade option").remove();//避免重复添加
+		 $("#familyGrade").append("<option value=''>---请选择---</option>");
+		$.each(data,function(i,n){
+		    // alert(n.family_name);
+			//根据id查找对象，
+           var obj = document.getElementById('familyGrade');
+           //添加一个选项
+          obj.options.add(new Option(n.family_grade,n.family_grade)); //这个兼容IE与firefox  
+		})
+	});
+})
+
+//省市区三级联动
+var $town = $('#demo3 select[name="town"]');
+var townFormat = function(info){
+	$town.hide().empty();
+	if(info['code']%1e4&&info['code']<7e5){	//是否为“区”且不是港澳台地区
+		$.ajax({
+			url:'/xiaoyin/static/town/'+info['code']+'.json',
+			dataType:'json',
+			success:function(town){
+				$town.show();
+				for(i in town){
+						$town.append('<option value="'+i+'">'+town[i]+'</option>');
+				}
+			}
+		});
+	}
+};
+      $('#demo3').citys({
+	province:'福建',
+	city:'厦门',
+	area:'思明',
+	onChange:function(info){
+		townFormat(info);
+	}
+},function(api){
+	var info = api.getInfo();
+	townFormat(info);
+});
+			           
+
+</script>	
 </body>
-	
 </html>

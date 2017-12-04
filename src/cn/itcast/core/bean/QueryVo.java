@@ -14,8 +14,13 @@ public class QueryVo implements Serializable{
 	private String memSex;
 	private String familyId;
 	private String familyName;
+	private String birthday;
 	private String familyLocation;
 	private String familyGrade;
+	private String province;
+	private String city;
+	private String area;
+	private String town;
 	private String memAddress;
 	private String memChildren;
 	private String memMarry;
@@ -26,6 +31,37 @@ public class QueryVo implements Serializable{
 	//分页
 	private Integer start;
 	private Integer rows;
+	
+	public QueryVo() {
+		super();
+	}
+	public QueryVo(int memId, String memName, String memSex, String familyId,String birthday, String familyName, 
+			String familyLocation,String familyGrade, String province, String city, String area, String town, 
+			String memAddress,String memChildren, String memMarry, String memPhone, String worh, String pic, 
+			Integer start,Integer rows) {
+		super();
+		this.memId = memId;
+		this.memName = memName;
+		this.memSex = memSex;
+		this.familyId = familyId;
+		this.familyName = familyName;
+		this.birthday = birthday;
+		this.familyLocation = familyLocation;
+		this.familyGrade = familyGrade;
+		this.province = province;
+		this.city = city;
+		this.area = area;
+		this.town = town;
+		this.memAddress = memAddress;
+		this.memChildren = memChildren;
+		this.memMarry = memMarry;
+		this.memPhone = memPhone;
+		this.worh = worh;
+		this.pic = pic;
+		this.start = start;
+		this.rows = rows;
+	}
+	
 	public Integer getStart() {
 		return start;
 	}
@@ -39,29 +75,7 @@ public class QueryVo implements Serializable{
 		this.rows = rows;
 	}
 	
-	public QueryVo() {
-		super();
-	}
-	public QueryVo(int memId, String memName, String memSex, String familyId, String familyName,
-			String familyLocation, String familyGrade, String memAddress, String memChildren, String memMarry,
-			String memPhone, String worh, String pic, Integer start, Integer rows) {
-		super();
-		this.memId = memId;
-		this.memName = memName;
-		this.memSex = memSex;
-		this.familyId = familyId;
-		this.familyName = familyName;
-		this.familyLocation = familyLocation;
-		this.familyGrade = familyGrade;
-		this.memAddress = memAddress;
-		this.memChildren = memChildren;
-		this.memMarry = memMarry;
-		this.memPhone = memPhone;
-		this.worh = worh;
-		this.pic = pic;
-		this.start = start;
-		this.rows = rows;
-	}
+	
 	
 	@ExcelField(title="ID", align=2, sort=1)
 	public int getMemId() {
@@ -83,6 +97,13 @@ public class QueryVo implements Serializable{
 	}
 	public void setMemSex(String memSex) {
 		this.memSex = memSex;
+	}
+	//@ExcelField(title="生日", align=2, sort=3)
+	public String getBirthday() {
+		return birthday;
+	}
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
 	}
 	@ExcelField(title="婚否", align=2, sort=4)
 	public String getMemMarry() {
@@ -138,6 +159,30 @@ public class QueryVo implements Serializable{
 	public void setMemAddress(String memAddress) {
 		this.memAddress = memAddress;
 	}
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
+	public String getTown() {
+		return town;
+	}
+	public void setTown(String town) {
+		this.town = town;
+	}
 	
 	@ExcelField(title="电话", align=2, sort=10)
 	public String getMemPhone() {
@@ -153,5 +198,7 @@ public class QueryVo implements Serializable{
 	public void setPic(String pic) {
 		this.pic = pic;
 	}
+	
+	
 	
 }

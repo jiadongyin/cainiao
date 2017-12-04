@@ -6,14 +6,26 @@
 		select * from sec_user where user_name= #{username}
 	</select>
 	
-	<select id="fingRole" parameterType="int" resultType="String">
-		select role_name from sec_role where role_id = #{user_id}
+	<select id="fingRole" parameterType="int" resultType="role">
+		select * from sec_role where role_id = #{user_id}
 	</select>
 	
-	<select id="findPermission" parameterType="int" resultType="String">
-		select permission_name from sec_permission where permission_id = #{user_id}
+	<select id="findPermission" parameterType="role" resultType="permission">
+		select 
+			* 
+		from 
+			sec_permission 
+		where 
+			permission_id = any(select permission_id from sec_role_permission where role_id = #{role_id} )
 	</select>
 
-
+    <update id="modifyPass" parameterType="user">
+		 UPDATE
+			sec_user u 
+		 SET
+		    u.password = #{password}
+		where 
+			u.user_id =  #{user_id}
+	</update>
 
 </mapper>

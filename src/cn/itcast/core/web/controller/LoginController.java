@@ -58,7 +58,7 @@ public class LoginController {
 			try{
 				subject.login(token);//调用安全管理器，安全管理器调用Realm
 				User loginUser = (User) subject.getPrincipal();
-				subject.getSession().setAttribute("currentUser",loginUser.getUser_name() );
+				subject.getSession().setAttribute("currentUser",loginUser.getUser_name());
 			}catch (UnknownAccountException e) {
 				e.printStackTrace();
 				//用户名不存在，跳转到登录页面
@@ -82,5 +82,24 @@ public class LoginController {
 //		request.getSession().removeAttribute("loginUser");// 将session失效
 //		return "login";
 //	}
+	
+	@RequestMapping("/modifyPass")
+	public String modifyPass(HttpServletRequest request,String oldPass,String newPass,String confirmPass){
+		 User currentUser = (User) SecurityUtils.getSubject().getPrincipal();
+		 oldPass = MD5Utils.md5(oldPass);
+		 newPass = MD5Utils.md5(newPass);
+		 confirmPass = MD5Utils.md5(confirmPass);
+		if(!oldPass.equals(currentUser.getPassword())){
+			request.setAttribute("msg", "原始密码错误!");
+			return "modifyPass";
+		}
+		if(!newPass.equals(confirmPass)){
+			request.setAttribute("msg", "确认密码错误!");
+			return "modifyPass";
+		}
+		currentUser.setPassword(newPass);
+		userService.modifyPass(currentUser);
+		return "success";
+	}
 	
 }

@@ -17,29 +17,28 @@
 <meta name="author" content="">
 <title>个人信息</title>
 <!-- Bootstrap Core CSS -->
-<link href="/xiaoyin/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="/xiaoyin/css/bootstrap-theme.min.css">  
+<link href="/xiaoyin/static/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/xiaoyin/static/css/bootstrap-theme.min.css">  
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->  
-<script src="/xiaoyin/js/jquery-2.0.3.min.js"></script>  
+<script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>  
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->  
-<script src="/xiaoyin/js/bootstrap.min.js"></script> 
-<script src="/xiaoyin/js/jquery.min.js"></script>
+<script src="/xiaoyin/static/js/bootstrap.min.js"></script> 
 <!-- MetisMenu CSS -->
-<link href="/xiaoyin/css/metisMenu.min.css" rel="stylesheet">
+<link href="/xiaoyin/static/css/metisMenu.min.css" rel="stylesheet">
 <!-- DataTables CSS -->
-<link href="/xiaoyin/css/dataTables.bootstrap.css" rel="stylesheet">
+<link href="/xiaoyin/static/css/dataTables.bootstrap.css" rel="stylesheet">
 <!-- Custom CSS -->
-<link href="/xiaoyin/css/sb-admin-2.css" rel="stylesheet">
+<link href="/xiaoyin/static/css/sb-admin-2.css" rel="stylesheet">
 <!-- Custom Fonts -->
-<link href="/xiaoyin/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link href="/xiaoyin/css/boot-crm.css" rel="stylesheet" type="text/css">
+<link href="/xiaoyin/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="/xiaoyin/static/css/boot-crm.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 
 </script>
 
   </head>
   
-  <body style="background-image:  url(/xiaoyin/images/bgp.jpg);width: 100%;" >
+  <body style="background-image:  url(/xiaoyin/static/images/bgp.jpg);width: 100%;" >
     
     <!-- 客户编辑对话框 -->
 		<div class="modal-dialog" role="document" style="position: 200px;background:rgba(0,0,0,0.3);">

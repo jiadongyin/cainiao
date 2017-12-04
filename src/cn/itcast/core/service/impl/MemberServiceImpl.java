@@ -151,9 +151,10 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<QueryVo> findList(QueryVo queryVo) {
-		return memberDao.findList(queryVo);
+		return memberDao.selectMemberList(queryVo);
 	}
 
+	
 	
 
 }

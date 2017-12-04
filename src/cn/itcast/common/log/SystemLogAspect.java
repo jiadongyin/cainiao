@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -94,7 +93,7 @@ public class SystemLogAspect {
 	        //请求的IP 
 	        String ip = getIpAddress(request);  
 	        // 获取当前用户
-	        User user = (User) SecurityUtils.getSubject().getPrincipal();
+	        	User user = (User) SecurityUtils.getSubject().getPrincipal();
 	        String user_name = user.getUser_name();
 	         try {
 	             //*========控制台输出=========*//  

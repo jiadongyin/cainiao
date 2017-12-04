@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-    <script src="/xiaoyin/js/jquery-2.0.3.min.js"></script>
+    <script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>
   </head>
   
   <body>
@@ -38,11 +38,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    <!-- Collect the nav links, forms, and other content for toggling -->
 				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				      <ul class="nav navbar-nav">
-				        <li><a href="<%=basePath%>member/list.action?familyName=奎武一家"><iclass="fa fa-edit fa-fw"></i>奎武一家</a></li>
-				        <li><a href="<%=basePath%>member/list.action?familyName=俞博一家"><iclass="fa fa-edit fa-fw"></i>俞博一家</a></li>
-				        <li><a href="<%=basePath%>member/list.action?familyName=佳怡一家"><iclass="fa fa-edit fa-fw"></i>佳怡一家</a></li>
-				        <li><a href="<%=basePath%>member/list.action?familyName=东麻子一家"><iclass="fa fa-edit fa-fw"></i>东麻子一家</a></li>
-				        <li><a href="<%=basePath%>member/list.action" ><iclass="fa fa-edit fa-fw"></i> 全部成员</a></li>
+				         <li><a href="/xiaoyin/member/list.action?familyName=奎武一家"><iclass="fa fa-edit fa-fw"></i>奎武一家</a></li>
+				        <li><a href="/xiaoyin/member/list.action?familyName=俞博一家"><iclass="fa fa-edit fa-fw"></i>俞博一家</a></li>
+				        <li><a href="/xiaoyin/member/list.action?familyName=佳怡一家"><iclass="fa fa-edit fa-fw"></i>佳怡一家</a></li>
+				        <li><a href="/xiaoyin/member/list.action?familyName=东麻子一家"><iclass="fa fa-edit fa-fw"></i>东麻子一家</a></li>
+				        <li><a href="/xiaoyin/member/list.action" ><iclass="fa fa-edit fa-fw"></i> 全部成员</a></li>
+						<li><a href="/xiaoyin/static/html/gallary1/gallary1.html"><iclass="fa fa-dashboard fa-fw"></i> 相册一</a></li>
+						<li><a href="/xiaoyin/static/html/gallary2/gallary2.html"><iclass="fa fa-dashboard fa-fw"></i> 相册二</a></li>
+						<li><a href="/xiaoyin/static/html/gallary4/gallary4.html"><iclass="fa fa-dashboard fa-fw"></i> 相册三</a></li>
+						<li><a href="/xiaoyin/member/uploadDown.action"><iclass="fa fa-dashboard fa-fw"></i> 图片上传</a></li>
+						<li><a href="/xiaoyin/member/sb.action"><iclass="fa fa-dashboard fa-fw"></i>上传相册</a></li>
+						<li><a href="/xiaoyin/member/baiduMap.action"><iclass="fa fa-dashboard fa-fw"></i> 百度地图</a></li>
+						<li><a href="/xiaoyin/static/OrgChart/tree.jsp"><iclass="fa fa-dashboard fa-fw"></i> 家族关系图</a></li>
+						<li><a href="/xiaoyin/jsp/demo.jsp"><iclass="fa fa-dashboard fa-fw"></i> layer-demo</a></li>
+				        
 				      </ul>
 				      
 				      <ul class="nav navbar-nav navbar-right">

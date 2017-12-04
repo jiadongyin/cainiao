@@ -30,4 +30,6 @@ public interface MemberDao {
 
 	List<Family> selectFamily();
 
+	
+
 }
