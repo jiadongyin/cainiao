@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.core.dao.SysRoleMapper">
+    <resultMap id="baseResultMap" type="cn.itcast.core.bean.entity.SysRole">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+    </resultMap>
+    <!--  -->
+    <sql id="sql_column">
+        id,
+        description,
+        name,
+        createTime,
+        updateTime,
+        del_flag
+    </sql>
+
+    <sql id="sql_column_where">
+        <if test="id !=null ">
+            AND id = #{id}
+        </if>
+        <if test="description !=null and description.length() != 0">
+            AND description = #{description}
+        </if>
+        <if test="name !=null and name.length() != 0">
+            AND name = #{name}
+        </if>
+        <if test="createTime !=null ">
+            AND create_time = #{createTime}
+        </if>
+        <if test="updateTime !=null ">
+            AND update_time = #{updateTime}
+        </if>
+         <if test="delFlag !=null ">
+            AND del_flag = #{delFlag}
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="SysRole" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="description !=null and description.length() !=0">
+                description,
+            </if>
+            <if test="name !=null and name.length() !=0">
+                name,
+            </if>
+            <if test="createTime !=null">
+                create_time,
+            </if>
+            <if test="updateTime !=null">
+                update_time,
+            </if>
+             <if test="delFlag !=null ">
+	            AND del_flag = #{delFlag}
+	        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="description !=null and description.length() !=0">
+                #{description},
+            </if>
+            <if test="name !=null and name.length() !=0">
+                #{name},
+            </if>
+            <if test="createTime !=null">
+                #{createTime},
+            </if>
+            <if test="updateTime !=null">
+                #{updateTime},
+            </if>
+             <if test="delFlag !=null ">
+	            AND del_flag = #{delFlag}
+	        </if>
+        </trim>
+    </insert>
+
+
+    <update id="update" parameterType="SysRole">
+        update sys_role
+        <set>
+            <if test="id !=null">
+                id = #{id},
+            </if>
+            <if test="description !=null and description.length() !=0">
+                description = #{description},
+            </if>
+            <if test="name !=null and name.length() !=0">
+                name = #{name},
+            </if>
+            <if test="createTime !=null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime !=null">
+                update_time = #{updateTime},
+            </if>
+             <if test="delFlag !=null ">
+	            AND del_flag = #{delFlag}
+	        </if>
+        </set>
+        where id =#{id} and del_flag=0
+    </update>
+
+    <select id="select" parameterType="SysRole" resultType="SysRole">
+        select * from sys_role where
+        <where>
+            <include refid="sql_column_where"/>
+        </where>
+    </select>
+
+    <select id="selectById" parameterType="int" resultType="SysRole">
+        SELECT *
+        FROM sys_role
+        WHERE id = #{id} AND del_flag=0
+    </select>
+
+    <select id="selectAll" resultType="SysRole">
+        SELECT *
+        FROM sys_role
+        WHERE del_flag=0
+    </select>
+
+    <select id="selectCounts" resultType="integer">
+        SELECT count(*)
+        FROM sys_role
+        WHERE del_flag=0
+    </select>
+    <select id="isExsitName" resultType="java.lang.Boolean">
+        SELECT exists(
+                SELECT *
+                FROM sys_role
+                WHERE del_flag=0 AND name = #{name}
+        )
+    </select>
+
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.core.dao.FamilyMapper">
+    <resultMap id="baseResultMap" type="cn.itcast.core.bean.entity.Family">
+        <result column="family_id" property="familyId" jdbcType="INTEGER"/>
+        <result column="family_name" property="familyName" jdbcType="VARCHAR"/>
+        <result column="family_location" property="familyLocation" jdbcType="VARCHAR"/>
+        <result column="family_grade" property="familyGrade" jdbcType="INTEGER"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+    </resultMap>
+    <!--  -->
+    <sql id="sql_column">
+        family_id,
+        family_name,
+        family_location,
+        family_grade,
+        del_flag
+    </sql>
+
+    <sql id="sql_column_where">
+        <if test="familyId !=null ">
+            AND family_id = #{familyId}
+        </if>
+        <if test="familyName !=null and familyName.length() != 0">
+            AND family_name = #{familyName}
+        </if>
+        <if test="familyLocation !=null and familyLocation.length() != 0">
+            AND family_location = #{familyLocation}
+        </if>
+        <if test="familyGrade !=null ">
+            AND family_grade = #{familyGrade}
+        </if>
+        <if test="delFlag !=null ">
+            AND del_flag = #{delFlag}
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="Family" useGeneratedKeys="true" keyProperty="id">
+        insert into family
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+           <if test="familyName !=null and familyName.length() != 0">
+	            family_name ,
+	        </if>
+	        <if test="familyLocation !=null and familyLocation.length() != 0">
+	            family_location ,
+	        </if>
+	        <if test="familyGrade !=null ">
+	             family_grade ,
+	        </if>
+	        <if test="delFlag !=null ">
+	            del_flag,
+	        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="familyName !=null and familyName.length() != 0">
+	            #{familyName},
+	        </if>
+	        <if test="familyLocation !=null and familyLocation.length() != 0">
+	             #{familyLocation},
+	        </if>
+	        <if test="familyGrade !=null ">
+	            #{familyGrade},
+	        </if>
+	        <if test="delFlag !=null ">
+	             #{delFlag},
+	        </if>
+        </trim>
+    </insert>
+
+
+    <update id="update" parameterType="Family">
+        update family
+        <set>
+            <if test="familyName !=null and familyName.length() != 0">
+	             family_name = #{familyName},
+	        </if>
+	        <if test="familyLocation !=null and familyLocation.length() != 0">
+	             family_location = #{familyLocation},
+	        </if>
+	        <if test="familyGrade !=null ">
+	             family_grade = #{familyGrade},
+	        </if>
+	        <if test="delFlag !=null ">
+	             del_flag = #{delFlag},
+	        </if>
+        </set>
+        where family_id =#{familyId} and del_flag = 0
+    </update>
+
+    <select id="select" parameterType="Family" resultType="Family">
+        select * from family where
+        <where>
+            <include refid="sql_column_where"/>
+        </where>
+    </select>
+
+    <select id="selectById" parameterType="integer" resultMap="baseResultMap">
+        SELECT *
+        FROM family
+        WHERE family_id = #{familyId} AND del_flag = 0
+    </select>
+    <select id="selectByName" parameterType="Family" resultMap="baseResultMap">
+        SELECT *
+        FROM family
+        WHERE family_name = #{familyName} AND del_flag = 0
+    </select>
+
+    <select id="selectAll" resultMap="baseResultMap">
+        SELECT *
+        FROM family
+        WHERE del_flag = 0
+    </select>
+
+    <select id="selectCounts" resultType="integer">
+        SELECT count(*)
+        FROM family
+        WHERE del_flag = 0
+    </select>
+    <select id="isExistName" resultType="java.lang.Boolean">
+        SELECT exists(
+                SELECT *
+                FROM family
+                WHERE del_flag = 0 AND family_name = #{familyName} 
+        )
+    </select>
+
+</mapper>

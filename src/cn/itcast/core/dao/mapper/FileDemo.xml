@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.core.dao.FileDemoMapper">
+    <resultMap id="baseResultMap" type="cn.itcast.core.bean.entity.FileDemo">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="fileName" property="fileName" jdbcType="VARCHAR"/>
+        <result column="filePath" property="filePath" jdbcType="VARCHAR"/>
+        <result column="picPrefix" property="picPrefix" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+    </resultMap>
+    <!--  -->
+    <sql id="sql_column">
+        id,
+        fileName,
+        filePath,
+        picPrefix,
+        create_time,
+        update_time,
+        del_flag
+    </sql>
+
+    <sql id="sql_column_where">
+        <if test="id !=null ">
+            AND id = #{id}
+        </if>
+        <if test="fileName !=null and fileName.length() != 0">
+            AND fileName = #{fileName}
+        </if>
+        <if test="filePath !=null and filePath.length() != 0">
+            AND filePath = #{filePath}
+        </if>
+        <if test="picPrefix !=null and picPrefix.length() != 0">
+            AND picPrefix = #{picPrefix}
+        </if>
+        <if test="createTime !=null ">
+            AND create_time = #{createTime}
+        </if>
+        <if test="updateTime !=null ">
+            AND update_time = #{updateTime}
+        </if>
+        <if test="delFlag !=null ">
+            AND del_flag = #{delFlag}
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="FileDemo" useGeneratedKeys="true" keyProperty="id">
+        insert into filedemo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+           <if test="fileName !=null and fileName.length() != 0">
+	            fileName ,
+	        </if>
+	        <if test="filePath !=null and filePath.length() != 0">
+	            filePath ,
+	        </if>
+	        <if test="picPrefix !=null and picPrefix.length() != 0">
+	            picPrefix ,
+	        </if>
+	        <if test="createTime !=null ">
+	             create_time ,
+	        </if>
+	        <if test="updateTime !=null ">
+	             update_time ,
+	        </if>
+	        <if test="delFlag !=null ">
+	            del_flag,
+	        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileName !=null and fileName.length() != 0">
+	            #{fileName},
+	        </if>
+	        <if test="filePath !=null and filePath.length() != 0">
+	             #{filePath},
+	        </if>
+	        <if test="picPrefix !=null and picPrefix.length() != 0">
+	             #{picPrefix},
+	        </if>
+	        <if test="createTime !=null ">
+	            #{createTime},
+	        </if>
+	        <if test="updateTime !=null ">
+	            #{updateTime},
+	        </if>
+	        <if test="delFlag !=null ">
+	             #{delFlag},
+	        </if>
+        </trim>
+    </insert>
+
+
+    <update id="update" parameterType="FileDemo">
+        update filedemo
+        <set>
+            <if test="fileName !=null and fileName.length() != 0">
+	             fileName = #{fileName},
+	        </if>
+	        <if test="filePath !=null and filePath.length() != 0">
+	             filePath = #{filePath},
+	        </if>
+	        <if test="picPrefix !=null and picPrefix.length() != 0">
+	             picPrefix = #{picPrefix},
+	        </if>
+	        <if test="createTime !=null ">
+	             create_time = #{createTime},
+	        </if>
+	        <if test="updateTime !=null ">
+	             update_time = #{updateTime},
+	        </if>
+	        <if test="delFlag !=null ">
+	             del_flag = #{delFlag},
+	        </if>
+        </set>
+        where id =#{id} and del_flag = 0
+    </update>
+
+    <select id="select" parameterType="FileDemo" resultType="FileDemo">
+        select * from filedemo where
+        <where>
+            <include refid="sql_column_where"/>
+        </where>
+    </select>
+
+    <select id="selectById" parameterType="integer" resultType="FileDemo">
+        SELECT *
+        FROM filedemo
+        WHERE id = #{id} AND del_flag = 0
+    </select>
+
+    <select id="selectAll" resultType="FileDemo">
+        SELECT *
+        FROM filedemo
+        WHERE del_flag = 0
+    </select>
+    
+    <select id="selectByPrefix" resultType="FileDemo">
+        SELECT *
+        FROM filedemo
+        WHERE del_flag = 0 and picPrefix = #{picPrefix}
+    </select>
+
+    <select id="selectCounts" resultType="integer">
+        SELECT count(*)
+        FROM filedemo
+        WHERE del_flag = 0
+    </select>
+    <select id="isExistName" resultType="java.lang.Boolean">
+        SELECT exists(
+                SELECT *
+                FROM filedemo
+                WHERE del_flag = 0 AND fileName = #{fileName} 
+        )
+    </select>
+
+</mapper>

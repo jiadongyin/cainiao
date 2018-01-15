@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.core.dao.PcatMapper">
+    <resultMap id="pcatMap" type="cn.itcast.core.bean.entity.Pcat">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="provinceName" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="cityName" property="cityName" jdbcType="VARCHAR"/>
+        <result column="areaName" property="areaName" jdbcType="VARCHAR"/>
+        <result column="townName" property="townName" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="area" property="area" jdbcType="VARCHAR"/>
+        <result column="town" property="town" jdbcType="VARCHAR"/>
+        <result column="mem_id" property="memId" jdbcType="INTEGER"/>
+    </resultMap>
+    <!-- -->
+    <sql id="sql_column">
+    	id,
+        provinceName,
+		cityName,
+		areaName,
+		townName,
+		province,
+		city,
+		area,
+		town,
+		mem_id
+    </sql>
+
+    <sql id="sql_column_where">
+        <if test="id !=null ">
+            AND id = #{id}
+        </if>
+        <if test="provinceName !=null and provinceName.length() != 0">
+            AND provinceName = #{provinceName}
+        </if>
+        <if test="cityName !=null and cityName.length() != 0">
+            AND cityName = #{cityName}
+        </if>
+        <if test="areaName !=null and areaName.length() != 0">
+            AND areaName = #{areaName}
+        </if>
+        <if test="townName !=null and townName.length() != 0">
+            AND townName = #{townName}
+        </if>
+        <if test="province !=null and province.length() != 0">
+            AND province = #{province}
+        </if>
+        <if test="city !=null and city.length() != 0">
+            AND city = #{city}
+        </if>
+        <if test="area !=null and area.length() != 0">
+            AND area = #{area}
+        </if>
+        <if test="town !=null and town.length() != 0">
+            AND town = #{town}
+        </if>
+        <if test="memId !=null ">
+            AND mem_id = #{memId}
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="Pcat" useGeneratedKeys="true" keyProperty="id">
+        insert into pcat
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="provinceName !=null and provinceName.length() != 0">
+	             provinceName ,
+	        </if>
+	        <if test="cityName !=null and cityName.length() != 0">
+	             cityName ,
+	        </if>
+	        <if test="areaName !=null and areaName.length() != 0">
+	             areaName ,
+	        </if>
+	        <if test="townName !=null and townName.length() != 0">
+	             townName ,
+	        </if>
+	        <if test="province !=null and province.length() != 0">
+	            province ,
+	        </if>
+	        <if test="city !=null and city.length() != 0">
+	            city ,
+	        </if>
+	        <if test="area !=null and area.length() != 0">
+	            area ,
+	        </if>
+	        <if test="town !=null and town.length() != 0">
+	            town,
+	        </if>
+	        <if test="memId !=null ">
+	            mem_id,
+	        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+             <if test="provinceName !=null and provinceName.length() != 0">
+	             #{provinceName},
+	        </if>
+	        <if test="cityName !=null and cityName.length() != 0">
+	            #{cityName},
+	        </if>
+	        <if test="areaName !=null and areaName.length() != 0">
+	             #{areaName},
+	        </if>
+	        <if test="townName !=null and townName.length() != 0">
+	             #{townName},
+	        </if>
+	        <if test="province !=null and province.length() != 0">
+	            #{province},
+	        </if>
+	        <if test="city !=null and city.length() != 0">
+	            #{city},
+	        </if>
+	        <if test="area !=null and area.length() != 0">
+	             #{area},
+	        </if>
+	        <if test="town !=null and town.length() != 0">
+	            #{town},
+	        </if>
+	        <if test="memId !=null ">
+	            #{memId},
+	        </if>
+        </trim>
+    </insert>
+
+
+    <update id="update" parameterType="Pcat">
+        update pcat
+        <set>
+            <if test="provinceName !=null and provinceName.length() != 0">
+	             provinceName = #{provinceName},
+	        </if>
+	        <if test="cityName !=null and cityName.length() != 0">
+	             cityName = #{cityName},
+	        </if>
+	        <if test="areaName !=null and areaName.length() != 0">
+	             areaName = #{areaName},
+	        </if>
+	        <if test="townName !=null and townName.length() != 0">
+	             townName = #{townName},
+	        </if>
+	        <if test="province !=null and province.length() != 0">
+	             province = #{province},
+	        </if>
+	        <if test="city !=null and city.length() != 0">
+	             city = #{city},
+	        </if>
+	        <if test="area !=null and area.length() != 0">
+	             area = #{area},
+	        </if>
+	        <if test="town !=null and town.length() != 0">
+	            town = #{town}
+	        </if>
+        </set>
+        where mem_id =#{memId} 
+    </update>
+
+    <select id="select" parameterType="Pcat" resultType="Pcat">
+        select * from pcat where
+        <where>
+            <include refid="sql_column_where"/>
+        </where>
+    </select>
+
+    <select id="selectById" parameterType="Integer" resultMap="pcatMap">
+        SELECT *
+        FROM pcat
+        WHERE mem_id = #{memId} 
+    </select>  
+
+
+</mapper>

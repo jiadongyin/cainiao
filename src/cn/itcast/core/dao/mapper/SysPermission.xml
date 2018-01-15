@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.core.dao.SysPermissionMapper">
+    <resultMap id="baseResultMap" type="cn.itcast.core.bean.entity.SysPermission">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+    </resultMap>
+    <!--  -->
+    <sql id="sql_column">
+        id,
+        name,
+        description,
+        createTime,
+        updateTime,
+        del_flag
+    </sql>
+
+    <sql id="sql_column_where">
+        <if test="id !=null ">
+            AND id = #{id}
+        </if>
+        <if test="name !=null and name.length() != 0">
+            AND name = #{name}
+        </if>
+        <if test="description !=null and description.length() != 0">
+            AND description = #{description}
+        </if>
+        <if test="createTime !=null ">
+            AND create_time = #{createTime}
+        </if>
+        <if test="updateTime !=null ">
+            AND update_time = #{updateTime}
+        </if>
+        <if test="delFlag !=null ">
+            AND del_flag = #{delFlag}
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="SysPermission" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name !=null and name.length() !=0">
+                name,
+            </if>
+            <if test="description !=null and description.length() !=0">
+                description,
+            </if>
+            <if test="createTime !=null">
+                create_time,
+            </if>
+            <if test="updateTime !=null">
+                update_time,
+            </if>
+            <if test="delFlag !=null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name !=null and name.length() !=0">
+                #{name},
+            </if>
+            <if test="description !=null and description.length() !=0">
+                #{description},
+            </if>
+            <if test="createTime !=null">
+                #{createTime},
+            </if>
+            <if test="updateTime !=null">
+                #{updateTime},
+            </if>
+            <if test="delFlag !=null">
+                #{delFlag},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="update" parameterType="SysPermission">
+        update sys_permission
+        <set>
+            <if test="name !=null and name.length() !=0">
+                name = #{name},
+            </if>
+            <if test="description !=null and description.length() !=0">
+                description = #{description},
+            </if>
+            <if test="createTime !=null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime !=null">
+                update_time = #{updateTime},
+            </if>
+            <if test="delFlag !=null">
+                del_flag = #{delFlag},
+            </if>
+        </set>
+        where id =#{id} and del_flag=0
+    </update>
+
+    <select id="select" parameterType="SysPermission" resultType="SysPermission">
+        select * from sys_permission where
+        <where>
+            <include refid="sql_column_where"/>
+        </where>
+    </select>
+
+    <select id="selectById" parameterType="integer" resultType="SysPermission">
+    	SELECT *
+        FROM sys_permission sp, sys_role sr,sys_role_permission srp
+        WHERE srp.sys_role_id = sr.id  
+        		and sp.id=srp.sys_permission_id 
+        		AND srp.del_flag=0 
+        		and sr.id = #{id} 
+        		AND sp.del_flag=0;
+        
+    </select>
+
+    <select id="selectAll" resultType="SysPermission">
+        SELECT *
+        FROM sys_permission
+        WHERE del_flag=0
+    </select>
+
+    <select id="selectCounts" resultType="integer">
+        SELECT count(*)
+        FROM sys_permission
+        WHERE del_flag=0
+    </select>
+    <select id="isExistName" resultType="java.lang.Boolean">
+        SELECT exists(
+                SELECT *
+                FROM sys_permission
+                WHERE del_flag=0 AND name = #{name} 
+        )
+    </select>
+
+</mapper>
