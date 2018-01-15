@@ -45,7 +45,8 @@
     <!-- 配置pojo别名 -->
 	<property name="typeAliasesPackage" value="cn.itcast.core.bean"></property>
     <!-- 自动扫描mapping.xml文件 -->  
-    <property name="mapperLocations" value="classpath:cn.itcast.core.dao.*.xml"></property>  
+    <property name="mapperLocations" value="classpath*:cn/itcast/core/dao/mapper/*.xml"></property> 
+   
   </bean>  
   
   <!-- 5  装配dao接口 -->  

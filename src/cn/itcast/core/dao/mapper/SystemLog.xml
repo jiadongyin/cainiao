@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.core.dao.SystemLogMapper">
+
+<insert id="insertSelective"  parameterType="cn.itcast.core.bean.entity.SystemLog" >
+insert into systemLog  values(#{id},#{description},#{method},#{logType},#{requestIp},#{exceptioncode},#{exceptionDetail},
+                             #{params},#{createBy},#{createDate})
+</insert>
+
+</mapper>

@@ -3,55 +3,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>9款CSS3鼠标悬停相册预览特效</title>
-
-<!-- 新 Bootstrap 核心 CSS 文件 -->  
-	    <link rel="stylesheet" href="/xiaoyin/static/css/bootstrap.min.css">  
-	    <!-- 可选的Bootstrap主题文件（一般不用引入） -->  
-	    <link rel="stylesheet" href="/xiaoyin/static/css/bootstrap-theme.min.css">  
-	    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->  
-	    <script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>  
-	    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->  
-	    <script src="/xiaoyin/static/js/bootstrap.min.js"></script> 
 <link href="css/main.css" rel="stylesheet" type="text/css"/>
 <link href="css/sim-prev-anim.css" rel="stylesheet" type="text/css" />
+<script>
+	function back(){
+		window.location.href="/xiaoyin/member/list.action";
+	}
+</script>
 </head>
 <body>
-<div class="row" style="width: 100%;height: 100%">
-		<!-- 顶部 -->
-		  <div class="col-md-12">
-		  	<!--描述：导航条 -->
-			<div class="container-fluid">
-				<nav class="navbar navbar-default">
-				  <div class="container-fluid">
-				    <!-- Brand and toggle get grouped for better mobile display -->
-				    <div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" >
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="/xiaoyin/index.html">首页<span class="sr-only">(current)</span></a>
-					</div>
-				    <!-- Collect the nav links, forms, and other content for toggling -->
-				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				      <ul class="nav navbar-nav">
-				         <li><a href="/xiaoyin/member/list.action?familyName=奎武一家"><iclass="fa fa-edit fa-fw"></i>奎武一家</a></li>
-				        <li><a href="/xiaoyin/member/list.action?familyName=俞博一家"><iclass="fa fa-edit fa-fw"></i>俞博一家</a></li>
-				        <li><a href="/xiaoyin/member/list.action?familyName=佳怡一家"><iclass="fa fa-edit fa-fw"></i>佳怡一家</a></li>
-				        <li><a href="/xiaoyin/member/list.action?familyName=东麻子一家"><iclass="fa fa-edit fa-fw"></i>东麻子一家</a></li>
-				        <li><a href="/xiaoyin/member/list.action" ><iclass="fa fa-edit fa-fw"></i> 全部成员</a></li>
-				        
-				      </ul>
-				      
-				    </div><!-- /.navbar-collapse -->
-				 </div><!-- /.container-fluid -->
-			</nav>
-		   </div>  
-		   
-		   
 <div class="albums">
-
+<span onclick="back()" style="cursor:pointer;position:absolute;margin-left: 10px;margin-top: 20px;"><img src="/xiaoyin/static/img/back.png" alt="返回图标" width="80px" height="80px" />返回</span>
+ 
 	<div class="albums-inner">
 		<div class="albums-tab">
 			<div class="albums-tab-thumb sim-anim-1">

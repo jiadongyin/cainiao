@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.core.dao.MemberMapper">
+	<resultMap id="baseMap" type="cn.itcast.core.bean.entity.Member">
+        <result column="mem_id" property="memId" jdbcType="INTEGER"/>
+        <result column="mem_name" property="memName" jdbcType="VARCHAR"/>
+        <result column="mem_sex" property="memSex" jdbcType="VARCHAR"/>
+        <result column="mem_marry" property="memMarry" jdbcType="VARCHAR"/>
+        <result column="mem_children" property="memChildren" jdbcType="VARCHAR"/>
+        <result column="mem_worh" property="memWorh" jdbcType="VARCHAR"/>
+        <result column="mem_phone" property="memPhone" jdbcType="VARCHAR"/>
+        <result column="mem_address" property="memAddress" jdbcType="VARCHAR"/>
+        <result column="mem_pic" property="memPic" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+        <result column="family_id" property="familyId" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_final" property="isFinal" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <sql id="sql_column">
+       mem_id,
+       mem_name,
+       mem_sex,
+       mem_marry,
+       mem_children,
+       mem_worh,
+       mem_phone,
+       mem_address,
+       mem_pic,
+       del_flag,
+       family_id,
+       create_time,
+       update_time,
+       is_final
+    </sql>
+    
+    <sql id="sql_column_where">
+        <if test="memId !=null ">
+            AND mem_id = #{memId}
+        </if>
+        <if test="memName !=null and memName.length() != 0">
+            AND mem_name = #{memName}
+        </if>
+        <if test="memSex !=null and memSex.length() != 0">
+            AND mem_sex = #{memSex}
+        </if>
+        <if test="memMarry !=null and memMarry.length() != 0">
+            AND mem_marry = #{memMarry}
+        </if>
+        <if test="memChildren !=null and memChildren.length() != 0">
+            AND mem_children = #{memChildren}
+        </if>
+        <if test="memWorh !=null and memWorh.length() != 0">
+            AND mem_worh = #{memWorh}
+        </if>
+        <if test="memPhone !=null and memPhone.length() != 0">
+            AND mem_phone = #{memPhone}
+        </if>
+        <if test="memAddress !=null and memAddress.length() != 0">
+            AND mem_address = #{memAddress}
+        </if>
+        <if test="memPic !=null and memPic.length() != 0">
+            AND mem_pic = #{memPic}
+        </if>
+        <if test="delFlag !=null ">
+            AND del_flag = #{delFlag}
+        </if>
+        <if test="familyId !=null ">
+            AND family_id = #{familyId}
+        </if>
+        <if test="createTime !=null ">
+            AND create_time = #{createTime}
+        </if>
+        <if test="updateTime !=null ">
+            AND update_time = #{updateTime}
+        </if>
+        <if test="isFinal !=null ">
+            AND is_final = #{isFinal}
+        </if>
+    </sql>
+    <insert id="insert" parameterType="Member" useGeneratedKeys="true" keyProperty="memId">
+        insert into member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+             <if test="memName !=null and memName.length() != 0">
+	             mem_name ,
+	        </if>
+	        <if test="memSex !=null and memSex.length() != 0">
+	             mem_sex ,
+	        </if>
+	        <if test="memMarry !=null and memMarry.length() != 0">
+	             mem_marry ,
+	        </if>
+	        <if test="memChildren !=null and memChildren.length() != 0">
+	             mem_children ,
+	        </if>
+	        <if test="memWorh !=null and memWorh.length() != 0">
+	             mem_worh ,
+	        </if>
+	        <if test="memPhone !=null and memPhone.length() != 0">
+	             mem_phone ,
+	        </if>
+	        <if test="memAddress !=null and memAddress.length() != 0">
+	             mem_address ,
+	        </if>
+	        <if test="memPic !=null and memPic.length() != 0">
+	             mem_pic ,
+	        </if>
+	        <if test="delFlag !=null ">
+	             del_flag ,
+	        </if>
+	        <if test="familyId !=null ">
+	             family_id ,
+	        </if>
+	        <if test="createTime !=null ">
+	             create_time ,
+	        </if>
+	        <if test="updateTime !=null ">
+	             update_time ,
+	        </if>
+	        <if test="isFinal !=null ">
+	             is_final ,
+	        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memName !=null and memName.length() != 0">
+	            #{memName},
+	        </if>
+	        <if test="memSex !=null and memSex.length() != 0">
+	            #{memSex},
+	        </if>
+	        <if test="memMarry !=null and memMarry.length() != 0">
+	            #{memMarry},
+	        </if>
+	        <if test="memChildren !=null and memChildren.length() != 0">
+	            #{memChildren},
+	        </if>
+	        <if test="memWorh !=null and memWorh.length() != 0">
+	            #{memWorh},
+	        </if>
+	        <if test="memPhone !=null and memPhone.length() != 0">
+	            #{memPhone},
+	        </if>
+	        <if test="memAddress !=null and memAddress.length() != 0">
+	            #{memAddress},
+	        </if>
+	        <if test="memPic !=null and memPic.length() != 0">
+	            #{memPic},
+	        </if>
+	        <if test="delFlag !=null ">
+	            #{delFlag},
+	        </if>
+	        <if test="familyId !=null ">
+	            #{familyId},
+	        </if>
+	        <if test="createTime !=null ">
+	            #{createTime},
+	        </if>
+	        <if test="updateTime !=null ">
+	            #{updateTime},
+	        </if>
+	        <if test="isFinal !=null ">
+	            #{isFinal},
+	        </if>
+        </trim>
+    </insert>
+    
+    
+    <update id="update" parameterType="Member">
+        update member
+        <set>
+             <if test="memName !=null and memName.length() != 0">
+	             mem_name = #{memName},
+	        </if>
+	        <if test="memSex !=null and memSex.length() != 0">
+	             mem_sex = #{memSex},
+	        </if>
+	        <if test="memMarry !=null and memMarry.length() != 0">
+	             mem_marry = #{memMarry},
+	        </if>
+	        <if test="memChildren !=null and memChildren.length() != 0">
+	             mem_children = #{memChildren},
+	        </if>
+	        <if test="memWorh !=null and memWorh.length() != 0">
+	             mem_worh = #{memWorh},
+	        </if>
+	        <if test="memPhone !=null and memPhone.length() != 0">
+	             mem_phone = #{memPhone},
+	        </if>
+	        <if test="memAddress !=null and memAddress.length() != 0">
+	             mem_address = #{memAddress},
+	        </if>
+	        <if test="memPic !=null and memPic.length() != 0">
+	             mem_pic = #{memPic},
+	        </if>
+	        <if test="delFlag !=null ">
+	             del_flag = #{delFlag},
+	        </if>
+	        <if test="familyId !=null ">
+	             family_id = #{familyId},
+	        </if>
+	        <if test="createTime !=null ">
+	             create_time = #{createTime},
+	        </if>
+	        <if test="updateTime !=null ">
+	             update_time = #{updateTime},
+	        </if>
+	        <if test="isFinal !=null ">
+	             is_final = #{isFinal},
+	        </if>
+        </set>
+        where mem_id =#{memId} and del_flag !=1
+    </update>
+    
+    
+    <select id="selectPage" resultMap="baseMap">
+    		select 
+    		<include refid="sql_column"/>
+    		from member 
+    		where del_flag = 0
+    		<!--<where>
+		       <if test="memName != null and memName != '' " >
+		        mem_name LIKE concat('%', #{memName},'%')
+		      </if>
+		      <if test="familyId != null " >
+		        and family_id = #{familyId}
+		      </if>
+    		</where> -->
+		      <if test="start !=null and rows != null">
+				limit #{start},#{rows} 
+			  </if>
+    </select>
+    <select id="selectPageWhere" parameterType="MemberDto" resultMap="baseMap">
+    		select 
+    		<include refid="sql_column"/>
+    		from member 
+    		where del_flag = 0
+    		
+		      <if test="memName != null and memName != '' " >
+		        and mem_name LIKE concat('%', #{memName},'%')
+		      </if>
+		      <if test="familyId != null and familyId != 0 " >
+		        and family_id = #{familyId}
+		      </if>
+		      <if test="start !=null and rows != null">
+				limit #{start},#{rows} 
+			  </if>
+    </select>
+    
+     <update id="deleteById">
+        UPDATE member
+        SET del_flag = 1
+        WHERE mem_id = #{memId}
+    </update>
+
+    <select id="select" parameterType="Member" resultType="Member">
+        select * from member where
+        <where>
+            <include refid="sql_column_where"/>
+        </where>
+    </select>
+
+    <select id="selectById" parameterType="int" resultMap="baseMap">
+        SELECT *
+        FROM member
+        WHERE mem_id = #{memId} AND del_flag != 1
+    </select>
+
+    <select id="selectAll"  resultMap="baseMap">
+        SELECT *
+        FROM member
+        WHERE del_flag != 1
+    </select>
+
+	<select id="selectCounts" resultType="integer">
+        SELECT count(*)
+        FROM member
+        WHERE del_flag != 1
+    </select>
+	
+</mapper>

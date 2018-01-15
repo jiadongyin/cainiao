@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="itcast" uri="http://itcast.cn/common/"%>
@@ -20,12 +19,9 @@
         <link href="/xiaoyin/static/css/bootstrap.min.css" rel="stylesheet">
         <link href="/xiaoyin/static/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
         <script src="/xiaoyin/static/js/jquery-2.0.3.min.js"></script>
-        <script src="/xiaoyin/static/js/fileinput.js" type="text/javascript"></script>
-        <script src="/xiaoyin/static/js/fileinput_locale_de.js" type="text/javascript"></script>
         <script src="/xiaoyin/static/js/bootstrap.min.js" type="text/javascript"></script>
-    </head>
-    <body>
-    
+</head>
+<body>
     <!-- 顶部 -->
 		  <div class="col-md-12">
 			<!-- 导航条 -->
@@ -37,8 +33,7 @@
             <div class="page-header">
             <h3 class="text-success">图片上传</h2>
             </div>
-
-            <form  action="<%=basePath%>member/upload.action" method="POST" enctype="multipart/form-data">
+            <form  action="<%=basePath%>member/upload.action?picPrefix=${picPrefix}" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <input id="file-4" type="file" class="file" data-upload-url="#" name="myfile" multiple=true>
                 </div>
@@ -48,13 +43,16 @@
                     <button class="btn btn-primary">提交</button>
                     <button class="btn btn-default" type="reset">重置</button>
                 </div>
-                
             </form>
         </div>
        
+</body>
 
-    </body>
-	<script>
+
+<script src="/xiaoyin/static/js/fileinput.js" type="text/javascript"></script>
+<script src="/xiaoyin/static/js/fileinput_locale_de.js" type="text/javascript"></script>
+<script>
+
     $("#file-0").fileinput({
         'allowedFileExtensions' : ['jpg', 'png','gif'],
     });

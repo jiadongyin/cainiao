@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.itcast.common.log.annotation.ServiceLog;
-import cn.itcast.core.bean.SystemLog;
+import cn.itcast.core.bean.entity.SystemLog;
 import cn.itcast.core.dao.SystemLogMapper;
 import cn.itcast.core.service.SystemLogService;
 @Service("systemLogService")

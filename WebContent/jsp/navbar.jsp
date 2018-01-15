@@ -27,37 +27,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  <div class="container-fluid">
 				    <!-- Brand and toggle get grouped for better mobile display -->
 				    <div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" >
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
 						<a class="navbar-brand" href="/xiaoyin/index.html">首页<span class="sr-only">(current)</span></a>
 					</div>
 				    <!-- Collect the nav links, forms, and other content for toggling -->
 				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				      <ul class="nav navbar-nav">
-				         <li><a href="/xiaoyin/member/list.action?familyName=奎武一家"><iclass="fa fa-edit fa-fw"></i>奎武一家</a></li>
-				        <li><a href="/xiaoyin/member/list.action?familyName=俞博一家"><iclass="fa fa-edit fa-fw"></i>俞博一家</a></li>
-				        <li><a href="/xiaoyin/member/list.action?familyName=佳怡一家"><iclass="fa fa-edit fa-fw"></i>佳怡一家</a></li>
-				        <li><a href="/xiaoyin/member/list.action?familyName=东麻子一家"><iclass="fa fa-edit fa-fw"></i>东麻子一家</a></li>
 				        <li><a href="/xiaoyin/member/list.action" ><iclass="fa fa-edit fa-fw"></i> 全部成员</a></li>
-						<li><a href="/xiaoyin/static/html/gallary1/gallary1.html"><iclass="fa fa-dashboard fa-fw"></i> 相册一</a></li>
-						<li><a href="/xiaoyin/static/html/gallary2/gallary2.html"><iclass="fa fa-dashboard fa-fw"></i> 相册二</a></li>
-						<li><a href="/xiaoyin/static/html/gallary4/gallary4.html"><iclass="fa fa-dashboard fa-fw"></i> 相册三</a></li>
-						<li><a href="/xiaoyin/member/uploadDown.action"><iclass="fa fa-dashboard fa-fw"></i> 图片上传</a></li>
-						<li><a href="/xiaoyin/member/sb.action"><iclass="fa fa-dashboard fa-fw"></i>上传相册</a></li>
-						<li><a href="/xiaoyin/member/baiduMap.action"><iclass="fa fa-dashboard fa-fw"></i> 百度地图</a></li>
+				        <li><a href="/xiaoyin/member/phoneWall.action" ><iclass="fa fa-edit fa-fw"></i> 照片墙</a></li>
 						<li><a href="/xiaoyin/static/OrgChart/tree.jsp"><iclass="fa fa-dashboard fa-fw"></i> 家族关系图</a></li>
-						<li><a href="/xiaoyin/jsp/demo.jsp"><iclass="fa fa-dashboard fa-fw"></i> layer-demo</a></li>
-				        
+						<!-- <li><a href="/xiaoyin/jsp/demo.jsp"><iclass="fa fa-dashboard fa-fw"></i> layer-demo</a></li> -->
 				      </ul>
-				      
 				      <ul class="nav navbar-nav navbar-right">
+				            <li>
+				        	  <iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=9" 
+				        	  width="460" height="55" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				            </li>
 				        <li class="dropdown">
-				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">你好：${currentUser} <span class="caret"></span></a>
+				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" 
+				          aria-expanded="false">你好：${currentUser} <span class="caret"></span></a>
 				          <ul class="dropdown-menu">
+				            <li><a href="/xiaoyin/user/userInfo.action">个人信息</a></li>
 				            <li><a href="/xiaoyin/jsp/modifyPass.jsp">修改密码</a></li>
 				            <li><a href="/xiaoyin/user/logout.action">退出登录</a></li>
 				            <li role="separator" class="divider"></li>

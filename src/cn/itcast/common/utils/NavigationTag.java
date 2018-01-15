@@ -43,10 +43,11 @@ public class NavigationTag extends TagSupport {
         	if (page.getTotal() % page.getSize() > 0) {
         		pageCount++;
         	}
+        	
         	writer.print("<nav>");
-        	//writer.print("<span style=\"margin-left: 10px;\" class = \"a\">总共"+ page.getTotal()+"条记录</span>");
         	
         	writer.print("<ul class=\"pagination\">");
+        	writer.print("<span style=\"margin-left: 450px;\" class = \"a\"><font size='5'>总共"+ page.getTotal()+"条记录</font></span>");
             //显示“上一页”按钮
         	if (page.getPage() > 1) {
                 String preUrl = append(url, "page", page.getPage() - 1);
@@ -77,6 +78,7 @@ public class NavigationTag extends TagSupport {
             	writer.print("<li class=\"disabled\"><a href=\"#\">下一页</a></li>");
             }
             writer.print("</nav>");
+           
         } catch (IOException e) {
             e.printStackTrace();
         }

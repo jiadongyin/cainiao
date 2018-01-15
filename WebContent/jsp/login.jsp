@@ -24,7 +24,7 @@ body { background-color: #2B2B2B; }
 		<h1>Welcome</h1>
 		<font color="red">${ msg }</font>
 		<form class="form" action="/xiaoyin/user/login.action" method="post" >
-			<input type="text" placeholder="Username" name="user_name">
+			<input type="text" placeholder="Username" name="loginName">
 			<input type="password" placeholder="Password" name="password">
 			<!-- 验证码 -->
 			<tr>

@@ -12,12 +12,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.itcast.common.utils.MD5Utils;
 import cn.itcast.common.utils.StringUtils;
-import cn.itcast.core.bean.User;
+import cn.itcast.core.bean.entity.SysUser;
 import cn.itcast.core.service.UserService;
+import nl.bitwalker.useragentutils.Browser;
+import nl.bitwalker.useragentutils.OperatingSystem;
+import nl.bitwalker.useragentutils.UserAgent;
+import nl.bitwalker.useragentutils.Version;
 
 /**
  * 登陆控制
@@ -35,7 +41,22 @@ public class LoginController {
 	private UserService userService;
 
 	@RequestMapping("/login")
-	public String login(User user,HttpServletRequest request){
+	public String login(SysUser user,HttpServletRequest request){
+		
+		UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));  
+        //浏览器  
+        Browser browser = userAgent.getBrowser();  
+        System.out.println("类型："+browser.getBrowserType()+"\n名称："+browser.getName()+"\n厂商："+browser.getManufacturer()+  
+                "\n产品系列："+browser.getGroup()+"\n引擎："+browser.getRenderingEngine());  
+        //浏览器版本  
+        Version version = userAgent.getBrowserVersion();  
+        System.out.println("========================");  
+        System.out.println("主版本："+version.getMajorVersion()+ "\n小版本："+version.getMinorVersion()+  "\n完整版本："+version.getVersion());  
+        //操作系统  
+        System.out.println("========================");  
+        OperatingSystem os = userAgent.getOperatingSystem();  
+        System.out.println("名称："+os.getName()+"\n设备类型："+os.getDeviceType()+  "\n产品系列："+os.getGroup()+  "\n生成厂商："+os.getManufacturer());  
+		
 		//获取用户输入的验证码
 		String valicode = request.getParameter("valicode");
 	    //从session获取验证码
@@ -51,14 +72,14 @@ public class LoginController {
 			//使用shiro提供的方式进行权限认证
 			//获得当前用户对象，现在状态为“未认证”
 			Subject subject = SecurityUtils.getSubject();
-			String username = user.getUser_name();
+			String username = user.getLoginName();
 			String password = user.getPassword();
 			password = MD5Utils.md5(password);
 			AuthenticationToken token = new UsernamePasswordToken(username,password);
 			try{
 				subject.login(token);//调用安全管理器，安全管理器调用Realm
-				User loginUser = (User) subject.getPrincipal();
-				subject.getSession().setAttribute("currentUser",loginUser.getUser_name());
+				SysUser loginUser = (SysUser) subject.getPrincipal();
+				subject.getSession().setAttribute("currentUser",loginUser.getLoginName());
 			}catch (UnknownAccountException e) {
 				e.printStackTrace();
 				//用户名不存在，跳转到登录页面
@@ -83,9 +104,19 @@ public class LoginController {
 //		return "login";
 //	}
 	
+	
+	@RequestMapping(value="userInfo")
+	public String userInfo(Model model){
+		SysUser currentUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
+		SysUser user = userService.selectByLoginName(currentUser.getLoginName());
+		model.addAttribute("currentUser", user);
+		return "info";
+		
+	}
+	
 	@RequestMapping("/modifyPass")
 	public String modifyPass(HttpServletRequest request,String oldPass,String newPass,String confirmPass){
-		 User currentUser = (User) SecurityUtils.getSubject().getPrincipal();
+		 SysUser currentUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
 		 oldPass = MD5Utils.md5(oldPass);
 		 newPass = MD5Utils.md5(newPass);
 		 confirmPass = MD5Utils.md5(confirmPass);

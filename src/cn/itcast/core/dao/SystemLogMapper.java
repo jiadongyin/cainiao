@@ -1,6 +1,6 @@
 package cn.itcast.core.dao;
 
-import cn.itcast.core.bean.SystemLog;
+import cn.itcast.core.bean.entity.SystemLog;
 
 public interface SystemLogMapper {
 

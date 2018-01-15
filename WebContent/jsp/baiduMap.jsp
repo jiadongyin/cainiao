@@ -42,8 +42,8 @@
 		
 		
 	</style>  
-	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=zvPR5yvDR5Q4rir2A4LbPYG5KFDdhajo"></script>
-	<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
+	<script type="text/javascript" src=" http://api.map.baidu.com/getscript?v=2.0&ak=zvPR5yvDR5Q4rir2A4LbPYG5KFDdhajo&services=&t=20171"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/getscript?v=1.2&ak=&services=&t=20130716024057"></script>
 	<script type="text/javascript" src="http://api.map.baidu.com/library/DistanceTool/1.2/src/DistanceTool_min.js"></script>
 	<!--加载鼠标绘制工具-->
 	<script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
@@ -59,7 +59,7 @@
 				<nav class="navbar navbar-default">
 				  <div class="container-fluid" style="height: 20px;width: 100%">
 				    <div class="navbar-header">
-						<a class="navbar-brand" href="/xiaoyin/index.html">首页<span class="sr-only">(current)</span></a>
+						<a class="navbar-brand" href="javascript:history.go(-1)">返回<span class="sr-only">(current)</span></a>
 					</div>
 					<div class="navbar-header" style="position: absolute;margin-top: 10px;margin-left: 50px">
 						&nbsp;输入位置信息（省/市/县/乡）：<input id="wz" type="text" name="weizhi"/>&nbsp;&nbsp;
@@ -80,13 +80,19 @@
 	<div id="container" style="overflow:hidden;zoom:1;position:relative;">	
 		<div id="map" style="height:100%;-webkit-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;"></div>
 	</div>
+<script type="text/javascript">
 
-	<script type="text/javascript">
 		var map = new BMap.Map("container");          // 创建地图实例  
-		var point = new BMap.Point(115.156, 30.916);  // 创建点坐标  30.9107202,115.1505606
-		map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别  
+        var city = '${data}';
+		if(city != ""){
+			dizhijiexi(city);
+		}else{
+			var point = new BMap.Point(115.156, 30.916);  // 创建点坐标  30.9107202,115.1505606
+			map.centerAndZoom(point, 15);                // 初始化地图，设置中心点坐标和地图级别  
+		}
 		map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
 		map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+		
 		
 		var myDis = new BMapLib.DistanceTool(map);//测量尺
 		
@@ -125,7 +131,7 @@
 	    }
 	    
 	    
-		
+	   //逆地址解析
 		function jingwei(){
 			var va = 1;
 			var geoc = new BMap.Geocoder();    //逆地址解析，点击地图展示详细地址
@@ -140,48 +146,54 @@
 				}
 			});
 		}
-		
+		//测量尺
 		function ce(){
 			myDis.open();
 		}
 	
+		
 		function search(){
 		    var p = document.getElementById("wz").value;
-		    //alert(p);
+		    dizhijiexi(p);
+		}
+		
+		//地址解析
+		function dizhijiexi(data){
 			// 百度地图API功能
 			// 创建地址解析器实例
 			var myGeo = new BMap.Geocoder();
 			// 将地址解析结果显示在地图上,并调整地图视野
-			myGeo.getPoint(p, function(point){
+			myGeo.getPoint(data, function(point){
 				if (point) {
-					map.centerAndZoom(point, 13);
+					map.centerAndZoom(point, 15);
 					map.addOverlay(new BMap.Marker(point));
 				}else{
 					alert("您选择地址没有解析到结果!");
 				}
-			}, p);
+			}, data);
 		}
-	
+		
+		//获取行政区域
 		function getBoundary(){    
-		var xzq = document.getElementById("xzq").value;
-		var bdary = new BMap.Boundary();
-		bdary.get(xzq, function(rs){       //获取行政区域
-			map.clearOverlays();        //清除地图覆盖物       
-			var count = rs.boundaries.length; //行政区域的点有多少个
-			if (count === 0) {
-				alert('未能获取当前输入行政区域');
-				return ;
-			}
-          	var pointArray = [];
-			for (var i = 0; i < count; i++) {
-				var ply = new BMap.Polygon(rs.boundaries[i], {strokeWeight: 2, strokeColor: "#ff0000"}); //建立多边形覆盖物
-				map.addOverlay(ply);  //添加覆盖物
-				pointArray = pointArray.concat(ply.getPath());
-			}    
-			map.setViewport(pointArray);    //调整视野  
-			addlabel();               
-		});   
-	}
+			var xzq = document.getElementById("xzq").value;
+			var bdary = new BMap.Boundary();
+			bdary.get(xzq, function(rs){       //获取行政区域
+				map.clearOverlays();        //清除地图覆盖物       
+				var count = rs.boundaries.length; //行政区域的点有多少个
+				if (count === 0) {
+					alert('未能获取当前输入行政区域');
+					return ;
+				}
+	          	var pointArray = [];
+				for (var i = 0; i < count; i++) {
+					var ply = new BMap.Polygon(rs.boundaries[i], {strokeWeight: 2, strokeColor: "#ff0000"}); //建立多边形覆盖物
+					map.addOverlay(ply);  //添加覆盖物
+					pointArray = pointArray.concat(ply.getPath());
+				}    
+				map.setViewport(pointArray);    //调整视野  
+				addlabel();               
+			});   
+		}
 	</script>
   </body>
   

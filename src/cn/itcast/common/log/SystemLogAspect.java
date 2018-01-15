@@ -24,8 +24,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import cn.itcast.common.log.annotation.ControllerLog;
 import cn.itcast.common.log.annotation.ServiceLog;
 import cn.itcast.common.utils.DateUtils;
-import cn.itcast.core.bean.SystemLog;
-import cn.itcast.core.bean.User;
+import cn.itcast.core.bean.entity.SysUser;
+import cn.itcast.core.bean.entity.SystemLog;
 import cn.itcast.core.service.SystemLogService;
 
 /**
@@ -93,8 +93,8 @@ public class SystemLogAspect {
 	        //请求的IP 
 	        String ip = getIpAddress(request);  
 	        // 获取当前用户
-	        	User user = (User) SecurityUtils.getSubject().getPrincipal();
-	        String user_name = user.getUser_name();
+	        	SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
+	        String user_name = user.getLoginName();
 	         try {
 	             //*========控制台输出=========*//  
 	        	 System.out.println("请求方法:" + (joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()"));  

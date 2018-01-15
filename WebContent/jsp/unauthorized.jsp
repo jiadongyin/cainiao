@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	intervalid = setInterval("fun()", 1000); 
 	function fun() { 
 		if (i == 0) { 
-			window.location.href = "/xiaoyin/jsp/login.jsp"; 
+			window.location.href = "/xiaoyin/member/list.action"; 
 			//layer.closeAll();
 			clearInterval(intervalid); 
 		} 

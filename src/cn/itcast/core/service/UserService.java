@@ -1,11 +1,13 @@
 package cn.itcast.core.service;
 
-import cn.itcast.core.bean.User;
+import cn.itcast.core.bean.entity.SysUser;
 
 public interface UserService {
 
-	User findByName(String username);
+	void modifyPass(SysUser currentUser);
 
-	void modifyPass(User currentUser);
+	SysUser selectByLoginName(String loginName);
+
+	
 
 }
