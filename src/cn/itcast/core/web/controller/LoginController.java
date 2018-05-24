@@ -36,7 +36,9 @@ public class LoginController {
 	
 	private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-	// 依赖注入
+	/**
+	 * 依赖注入
+	 */
 	@Autowired
 	private UserService userService;
 
@@ -77,7 +79,8 @@ public class LoginController {
 			password = MD5Utils.md5(password);
 			AuthenticationToken token = new UsernamePasswordToken(username,password);
 			try{
-				subject.login(token);//调用安全管理器，安全管理器调用Realm
+				//调用安全管理器，安全管理器调用Realm
+				subject.login(token);
 				SysUser loginUser = (SysUser) subject.getPrincipal();
 				subject.getSession().setAttribute("currentUser",loginUser.getLoginName());
 			}catch (UnknownAccountException e) {
