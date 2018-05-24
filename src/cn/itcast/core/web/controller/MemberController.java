@@ -54,6 +54,7 @@ import cn.itcast.core.service.MemberService;
 /**
  * 家庭成员管理
  * @version 1.0
+ * @author yinjiadong
  */
 @Controller
 @RequestMapping("/member")
@@ -61,12 +62,16 @@ public class MemberController {
 	
 	private static Logger logger = LoggerFactory.getLogger(MemberController.class);
 
-	// 依赖注入
+	/** 依赖注入
+	 * 
+	 */
 	@Autowired
 	private MemberService memberService;
-	//图片存放位置
+	/**图片存放位置
+	 * 
+	 */
 	@Value("${upload.dir}")
-	private String pic_upload_dir;
+	private String picUploadDir;
 	
 	/**
 	 * 成员列表
@@ -116,18 +121,17 @@ public class MemberController {
 		return jsonObject.toString();
 	}*/
 	
-	/*
+	/**
 	 * 家庭列表
 	 */
 	@RequestMapping("/selectFamily")
 	@ResponseBody
-//	@ControllerLog(operationType="selectFamily:",operationName="查询家庭列表")  
 	public List<Family> selectFamily(){
 		List<Family> family = memberService.selectFamily();  
 		return family;
 	}
 	
-	/*
+	/**
 	 * 根据id获取成员信息
 	*/
 	@RequestMapping("/edit")
@@ -164,7 +168,7 @@ public class MemberController {
 	} 
 
 	
-	/*
+	/**
 	 * 成员编辑
 	 */
 	@RequestMapping("/add")
@@ -181,7 +185,7 @@ public class MemberController {
 		return "redirect:/member/list.action";
 	}
 	
-	/*
+	/**
 	 * 成员更新操作
 	 */
 	/*@RequestMapping("/update")
@@ -193,7 +197,7 @@ public class MemberController {
 	}*/
 	
 	
-	/*
+	/**
 	 * 成员删除
 	 */
 	@RequestMapping("/delete")
@@ -206,7 +210,7 @@ public class MemberController {
 	}
 	
 	
-	/*
+	/**
 	 * 图片上传下载跳转
 	 */
 	@RequestMapping("/uploadDown")
@@ -215,7 +219,7 @@ public class MemberController {
 		return "fileUpDown";
 	} 
 	
-	/*
+	/**
 	 * 图片上传，
 	 */
 	@RequestMapping("/upload")
@@ -225,7 +229,7 @@ public class MemberController {
 		request.setCharacterEncoding("utf-8");
 		//获得物理路径webapp所在路径  
         //String pathRoot = request.getSession().getServletContext().getRealPath("/static/images"); 
-		String pathRoot = pic_upload_dir;
+		String pathRoot = picUploadDir;
         if (pictureFile != null && pictureFile.length > 0) {
             for (int i = 0; i < pictureFile.length; i++) {
                 MultipartFile file = pictureFile[i];
@@ -245,14 +249,14 @@ public class MemberController {
 		return new ModelAndView("redirect:/member/sb.action").addObject("picPrefix",picPrefix);
 	}
 	
-	/*
+	/**
 	 * 头像上传，
 	 */
 	@RequestMapping("/ajax_upload")
 	@ControllerLog(operationType="ajax_upload",operationName="头像上传") 
     @ResponseBody
     public String up(@RequestParam MultipartFile file) throws IOException{
-		String pathRoot = pic_upload_dir;
+		String pathRoot = picUploadDir;
 		//原始文件名
         String picName = file.getOriginalFilename();
 		file.transferTo(new File(pathRoot+"/"+picName));
@@ -272,7 +276,7 @@ public class MemberController {
     }
 
 	
-	/*
+	/**
 	 * 上传图片列表
 	 */
 	@RequestMapping("/sb")
@@ -286,7 +290,7 @@ public class MemberController {
 		return "gallary";
 	}
 	
-	/*
+	/**
 	 * 照片墙
 	 * */
 	@RequestMapping("/phoneWall")
@@ -299,7 +303,7 @@ public class MemberController {
 	}
 	
 	
-	/*
+	/**
 	 * 百度地图api
 	 * 家庭住址
 	 */
@@ -311,7 +315,7 @@ public class MemberController {
 	}
 	
 	
-	/*
+	/**
 	 * 百度地图api
 	 * 现居地
 	 */
@@ -329,7 +333,7 @@ public class MemberController {
 	 public String downloadFile(@RequestParam("fileName") String fileName, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		if (fileName != null) {
          // String pathRoot = request.getSession().getServletContext().getRealPath("/upload"); 
-		String  pathRoot = pic_upload_dir;
+		String  pathRoot = picUploadDir;
           File file = new File(pathRoot, fileName);
           if (file.exists()) {
               response.setContentType("application/force-download");// 设置强制下载不打开
@@ -371,7 +375,7 @@ public class MemberController {
           return null;
      }*/
 	
-	/*
+	/**
 	 * 复选删除
 	 */
 	@RequestMapping("/deleteChecked")
@@ -392,7 +396,7 @@ public class MemberController {
 	
 	
 	
-	/*
+	/**
 	 * 导出Excel
 	 */
 	@RequestMapping("/exportExcel")
@@ -412,7 +416,7 @@ public class MemberController {
 		return ;
 	}
 	
-	/*
+	/**
 	 * 导出pdf
 	 */
 	@RequestMapping(value="exportpdf", method=RequestMethod.POST)
